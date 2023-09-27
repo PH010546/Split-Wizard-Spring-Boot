@@ -21,6 +21,7 @@ public class Member {
     private String account;
     private String name;
     private String password;
+    @Transient
     private Timestamp created_time;
     private Timestamp update_time;
 

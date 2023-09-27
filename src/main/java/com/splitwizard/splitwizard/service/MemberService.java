@@ -1,45 +1,13 @@
 package com.splitwizard.splitwizard.service;
 
-import com.splitwizard.splitwizard.DAO.MemberRepository;
 import com.splitwizard.splitwizard.model.Member;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
-public class MemberService {
+public interface MemberService {
 
-    private final MemberRepository dao;
-    @Autowired
-    public MemberService(MemberRepository dao){
-
-        this.dao = dao;
-
-    }
-
-    public Member getById(Integer id){
-
-        return dao.getReferenceById(id);
-
-    }
-
-    public List<Member> getAll(){
-
-        return dao.findAll();
-    }
-
-    public String login(String account, String password){
-
-        // 檢查帳號是否存在
-        if (dao.findByAccount(account) == null) return "帳號或密碼錯誤";
-
-
-        // 檢查帳號密碼是否符合
-        Member member = dao.findByAccount(account);
-        if (!member.getPassword().equals(password)) return "帳號或密碼錯誤";
-
-        return "登入成功";
-    }
-
+    Member getById(Integer id);
+    List<Member> getAll();
+    String login(String account, String password);
+    String register(Member member);
 }
