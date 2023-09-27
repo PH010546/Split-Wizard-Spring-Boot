@@ -3,11 +3,13 @@ package com.splitwizard.splitwizard.controller;
 import com.splitwizard.splitwizard.model.Member;
 import com.splitwizard.splitwizard.service.MemberServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@CrossOrigin(value = "http://localhost:3000")
 public class MemberController {
 
     private final MemberServiceImpl service;
