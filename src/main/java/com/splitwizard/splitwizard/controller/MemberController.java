@@ -25,7 +25,7 @@ public class MemberController {
         return service.login(member.getAccount(), member.getPassword());
     }
 
-    @PostMapping("/register")
+    @PostMapping(value = "/register", produces = MediaType.APPLICATION_JSON_VALUE)
     public Result register(@RequestBody Member member){
 
         return service.register(member);
