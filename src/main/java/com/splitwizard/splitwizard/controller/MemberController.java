@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@CrossOrigin(value = "http://localhost:3000")
 public class MemberController {
 
     private final MemberServiceImpl service;
