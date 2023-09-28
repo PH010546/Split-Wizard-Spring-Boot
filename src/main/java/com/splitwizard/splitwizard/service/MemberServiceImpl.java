@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 @Service
@@ -57,6 +58,10 @@ public class MemberServiceImpl implements MemberService{
 
         // 加密密碼
         member.setPassword(passwordEncoder.encode(member.getPassword()));
+
+        // 將時間加入
+        member.setCreated_time(new Timestamp(System.currentTimeMillis()));
+        member.setUpdate_time(new Timestamp(System.currentTimeMillis()));
 
         // 儲存進DB
         dao.save(member);
