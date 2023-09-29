@@ -8,8 +8,8 @@ import java.util.List;
 
 public interface MemberService {
 
-    Member getById(Integer id);
-    List<Member> getAll();
+    Result getById(Integer id);
+    Result getAll();
     Result login(String account, String password);
     Result register(Member member);
 }

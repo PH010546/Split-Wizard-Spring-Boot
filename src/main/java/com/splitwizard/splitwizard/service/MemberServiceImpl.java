@@ -26,15 +26,20 @@ public class MemberServiceImpl implements MemberService{
 
     }
 
-    public Member getById(Integer id){
+    public Result getById(Integer id){
 
-        return dao.getReferenceById(id);
+        return null;
 
     }
 
-    public List<Member> getAll(){
+    public Result getAll(){
 
-        return dao.findAll();
+        try{
+            return R.success(dao.findAll());
+        }catch (Exception e){
+            e.printStackTrace();
+            return R.fail(e.getMessage());
+        }
     }
 
     public Result login(String account, String password){
