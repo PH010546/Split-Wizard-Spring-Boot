@@ -65,7 +65,6 @@ public class MemberServiceImpl implements MemberService{
         member.setPassword(passwordEncoder.encode(member.getPassword()));
 
         // 將時間加入
-        member.setCreated_time(new Timestamp(System.currentTimeMillis()));
         member.setUpdate_time(new Timestamp(System.currentTimeMillis()));
 
         // 儲存進DB
