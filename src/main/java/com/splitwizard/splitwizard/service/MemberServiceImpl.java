@@ -1,6 +1,7 @@
 package com.splitwizard.splitwizard.service;
 
 import com.splitwizard.splitwizard.DAO.MemberRepository;
+import com.splitwizard.splitwizard.Util.MemberDTO;
 import com.splitwizard.splitwizard.Util.Result;
 import com.splitwizard.splitwizard.model.Member;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +9,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
-import java.util.List;
 
 @Service
 public class MemberServiceImpl implements MemberService{
@@ -16,6 +16,7 @@ public class MemberServiceImpl implements MemberService{
     private final MemberRepository dao;
     private final BCryptPasswordEncoder passwordEncoder;
     private final Result R;
+    private final MemberDTO dto;
 
     @Autowired
     public MemberServiceImpl(MemberRepository dao){
@@ -23,6 +24,7 @@ public class MemberServiceImpl implements MemberService{
         this.dao = dao;
         this.passwordEncoder = new BCryptPasswordEncoder();
         this.R = new Result();
+        this.dto = new MemberDTO();
 
     }
 
@@ -65,12 +67,23 @@ public class MemberServiceImpl implements MemberService{
         member.setPassword(passwordEncoder.encode(member.getPassword()));
 
         // 將時間加入
+        member.setCreated_time(new Timestamp(System.currentTimeMillis()));
         member.setUpdate_time(new Timestamp(System.currentTimeMillis()));
 
         // 儲存進DB
         dao.save(member);
 
         return R.success(member.getId());
+    }
+
+    public Result getAllMemberWithoutPassword(){
+
+        try{
+            return R.success(dto.convertList(dao.findAll()));
+        }catch (Exception e){
+            e.printStackTrace();
+            return R.fail(e.getMessage());
+        }
     }
 
 }

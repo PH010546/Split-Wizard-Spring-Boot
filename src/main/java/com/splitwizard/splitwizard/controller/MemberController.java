@@ -5,6 +5,7 @@ import com.splitwizard.splitwizard.model.Member;
 import com.splitwizard.splitwizard.service.MemberServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,5 +28,10 @@ public class MemberController {
     public Result register(@RequestBody Member member){
 
         return service.register(member);
+    }
+
+    @GetMapping(value = "/members", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Result getAllMember(){
+        return service.getAllMemberWithoutPassword();
     }
 }
