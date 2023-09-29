@@ -12,6 +12,7 @@ import java.sql.Timestamp;
 @Data
 @NoArgsConstructor
 @Getter @Setter
+@Table(name = "group1")
 public class Group {
 
     @Id
@@ -22,8 +23,6 @@ public class Group {
     private Boolean status;
     private Boolean redirect;
     private Boolean archive;
-
-    @Transient
     private Timestamp created_time;
     private Timestamp update_time;
 
