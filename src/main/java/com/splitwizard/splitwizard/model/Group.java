@@ -12,7 +12,7 @@ import java.sql.Timestamp;
 @Data
 @NoArgsConstructor
 @Getter @Setter
-@Table(name = "group1")
+@Table(name = "`group`")
 public class Group {
 
     @Id

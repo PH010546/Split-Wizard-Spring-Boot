@@ -1,6 +1,7 @@
 package com.splitwizard.splitwizard.service;
 
 import com.splitwizard.splitwizard.DAO.GroupRepository;
+import com.splitwizard.splitwizard.Util.GroupDTO;
 import com.splitwizard.splitwizard.Util.Result;
 import com.splitwizard.splitwizard.model.Group;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,10 +14,12 @@ public class GroupServiceImpl implements GroupService{
 
     private final GroupRepository dao;
     private final Result R;
+    private final GroupDTO dto;
     @Autowired
     public GroupServiceImpl(GroupRepository dao){
         this.dao = dao;
         this.R = new Result();
+        this.dto = new GroupDTO();
     }
 
 
@@ -39,7 +42,7 @@ public class GroupServiceImpl implements GroupService{
         try{
 
 
-            // TODO: need to change this code with DTO
+            // TODO: need to validate?
             // set time
             group.setCreated_time(new Timestamp(System.currentTimeMillis()));
             group.setUpdate_time(new Timestamp(System.currentTimeMillis()));
@@ -49,8 +52,8 @@ public class GroupServiceImpl implements GroupService{
             group.setRedirect(false);
             group.setStatus(false);
 
-            // save
-            return R.success(dao.save(group));
+            // save & return DTO
+            return R.success(dto.convert(dao.save(group)));
 
         }catch (Exception e){
             e.printStackTrace();
