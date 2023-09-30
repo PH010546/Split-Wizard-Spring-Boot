@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.util.Optional;
 
 @Service
 public class GroupServiceImpl implements GroupService{
@@ -62,5 +63,20 @@ public class GroupServiceImpl implements GroupService{
 
 
 
+    }
+
+    @Override
+    public Result updateGroupName(String name, Integer id) {
+
+        Optional<Group> groupOptional = dao.findById(id);
+
+        if (groupOptional.isEmpty()) return R.fail("group not found with id");
+
+        Group group = groupOptional.get();
+
+        group.setName(name);
+        group.setUpdate_time(new Timestamp(System.currentTimeMillis()));
+
+        return R.success(dto.convert(dao.save(group)));
     }
 }

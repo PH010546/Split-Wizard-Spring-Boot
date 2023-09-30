@@ -29,4 +29,9 @@ public class GroupController {
         return service.addGroup(group);
     }
 
+    @PostMapping(value = "group/update")
+    public Result updateGroupName(@RequestBody Group group){
+        return service.updateGroupName(group.getName(), group.getId());
+    }
+
 }

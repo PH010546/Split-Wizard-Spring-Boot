@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 public interface GroupService {
 
     Result getById(Integer id);
-
     Result addGroup(Group group);
+    Result updateGroupName(String name, Integer id);
 
 }
