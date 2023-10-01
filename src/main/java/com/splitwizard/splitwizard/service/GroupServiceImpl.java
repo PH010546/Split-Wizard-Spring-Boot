@@ -79,4 +79,16 @@ public class GroupServiceImpl implements GroupService{
 
         return R.success(dto.convert(dao.save(group)));
     }
+
+    @Override
+    public Result deleteGroup(Integer id) {
+
+        try{
+            dao.deleteById(id);
+            return R.success(id);
+        }catch (Exception e){
+            e.printStackTrace();
+            return R.fail(e.getMessage());
+        }
+    }
 }

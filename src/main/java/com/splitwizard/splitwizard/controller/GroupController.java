@@ -4,9 +4,7 @@ import com.splitwizard.splitwizard.Util.Result;
 import com.splitwizard.splitwizard.model.Group;
 import com.splitwizard.splitwizard.service.GroupServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class GroupController {
@@ -29,9 +27,14 @@ public class GroupController {
         return service.addGroup(group);
     }
 
-    @PostMapping(value = "group/update")
+    @PutMapping(value = "/group/update")
     public Result updateGroupName(@RequestBody Group group){
         return service.updateGroupName(group.getName(), group.getId());
+    }
+
+    @DeleteMapping(value = "/group/delete")
+    public Result deleteGroup(Integer id){
+        return service.deleteGroup(id);
     }
 
 }

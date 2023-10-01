@@ -29,7 +29,7 @@ public class MemberController {
         return service.register(member);
     }
 
-    @GetMapping(value = "/members")
+    @GetMapping(value = "/allMembers")
     public Result getAllMember(){
         return service.getAllMemberWithoutPassword();
     }

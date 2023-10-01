@@ -52,7 +52,7 @@ public class MemberServiceImpl implements MemberService{
 
         // 檢查帳號密碼是否符合
         Member member = dao.findByAccount(account);
-        if (!passwordEncoder.matches(password, member.getPassword())) R.fail("帳號或密碼錯誤");
+        if (!passwordEncoder.matches(password, member.getPassword())) return R.fail("帳號或密碼錯誤");
 
         return R.success(member.getId());
     }
