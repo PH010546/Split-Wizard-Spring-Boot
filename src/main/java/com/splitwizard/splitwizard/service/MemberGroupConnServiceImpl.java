@@ -30,7 +30,9 @@ public class MemberGroupConnServiceImpl implements MemberGroupConnService{
             mgc.setNet(0L);
             mgc.setUpdate_time(new Timestamp(System.currentTimeMillis()));
 
-            return R.success(dao.save(mgc));
+            dao.save(mgc);
+
+            return R.success(null);
         }catch (Exception e){
             e.printStackTrace();
             return R.fail(e.getMessage());

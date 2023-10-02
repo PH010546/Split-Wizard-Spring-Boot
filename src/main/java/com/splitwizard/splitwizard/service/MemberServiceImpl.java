@@ -54,7 +54,7 @@ public class MemberServiceImpl implements MemberService{
         Member member = dao.findByAccount(account);
         if (!passwordEncoder.matches(password, member.getPassword())) return R.fail("帳號或密碼錯誤");
 
-        return R.success(member.getId());
+        return R.success(dto.convert(member));
     }
 
     @Override
@@ -71,9 +71,7 @@ public class MemberServiceImpl implements MemberService{
         member.setUpdate_time(new Timestamp(System.currentTimeMillis()));
 
         // 儲存進DB
-        dao.save(member);
-
-        return R.success(member.getId());
+        return R.success(dto.convert(dao.save(member)));
     }
 
     public Result getAllMemberWithoutPassword(){
