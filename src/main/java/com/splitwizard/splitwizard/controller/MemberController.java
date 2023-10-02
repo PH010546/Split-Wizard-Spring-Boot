@@ -1,8 +1,10 @@
 package com.splitwizard.splitwizard.controller;
 
+import com.splitwizard.splitwizard.Util.MemberDTO;
 import com.splitwizard.splitwizard.Util.Result;
 import com.splitwizard.splitwizard.model.Member;
 import com.splitwizard.splitwizard.service.MemberServiceImpl;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,8 +21,13 @@ public class MemberController {
     }
 
     @PostMapping(value = "/login")
-    public Result login(@RequestBody Member member){
-        return service.login(member.getAccount(), member.getPassword());
+    public Result login(@RequestBody Member member, HttpSession session){
+        Result result = service.login(member.getAccount(), member.getPassword());
+        MemberDTO currentUser = (MemberDTO) result.getResult();
+
+        session.setAttribute("currentUser", currentUser.getId());
+
+        return result;
     }
 
     @PostMapping(value = "/register")

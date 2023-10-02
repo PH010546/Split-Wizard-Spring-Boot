@@ -3,6 +3,7 @@ package com.splitwizard.splitwizard.controller;
 import com.splitwizard.splitwizard.Util.Result;
 import com.splitwizard.splitwizard.model.Group;
 import com.splitwizard.splitwizard.service.GroupServiceImpl;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,10 +18,11 @@ public class GroupController {
         this.service = service;
 
     }
-//    @GetMapping(value = "/groups")
-//    public Result getGroup(Integer id){
-//        return service.getById(id);
-//    }
+    @GetMapping(value = "/groups")
+    public Result getGroup(HttpSession session){
+        System.out.println(session.getAttribute("currentUser"));
+        return service.getById((Integer) session.getAttribute("currentUser"));
+    }
 
     @PostMapping(value = "/addGroup")
     public Result addGroup(@RequestBody Group group){
