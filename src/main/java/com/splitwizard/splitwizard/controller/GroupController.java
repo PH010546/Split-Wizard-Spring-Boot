@@ -17,12 +17,12 @@ public class GroupController {
         this.service = service;
 
     }
-    @PostMapping(value = "/group")
-    public Result getGroup(Integer id){
-        return service.getById(id);
-    }
+//    @GetMapping(value = "/groups")
+//    public Result getGroup(Integer id){
+//        return service.getById(id);
+//    }
 
-    @PostMapping(value = "/group/add")
+    @PostMapping(value = "/addGroup")
     public Result addGroup(@RequestBody Group group){
         return service.addGroup(group);
     }
