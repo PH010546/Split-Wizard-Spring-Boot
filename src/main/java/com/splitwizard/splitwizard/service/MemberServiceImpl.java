@@ -46,32 +46,43 @@ public class MemberServiceImpl implements MemberService{
 
     public Result login(String account, String password){
 
-        // 檢查帳號是否存在
-        if (dao.findByAccount(account) == null) return R.fail("帳號或密碼錯誤");
+        try{
+            // 檢查帳號是否存在
+            if (dao.findByAccount(account) == null) return R.fail("帳號或密碼錯誤");
 
 
-        // 檢查帳號密碼是否符合
-        Member member = dao.findByAccount(account);
-        if (!passwordEncoder.matches(password, member.getPassword())) return R.fail("帳號或密碼錯誤");
+            // 檢查帳號密碼是否符合
+            Member member = dao.findByAccount(account);
+            if (!passwordEncoder.matches(password, member.getPassword())) return R.fail("帳號或密碼錯誤");
 
-        return R.success(dto.convert(member));
+            return R.success(dto.convert(member));
+        }catch (Exception e){
+            e.printStackTrace();
+            return R.fail(e.getMessage());
+        }
     }
 
     @Override
     public Result register(Member member) {
 
-        // 檢查帳號是否存在
-        if (dao.findByAccount(member.getAccount()) != null) return R.fail("帳號已存在");
+        try{
+            // 檢查帳號是否存在
+            if (dao.findByAccount(member.getAccount()) != null) return R.fail("帳號已存在");
 
-        // 加密密碼
-        member.setPassword(passwordEncoder.encode(member.getPassword()));
+            // 加密密碼
+            member.setPassword(passwordEncoder.encode(member.getPassword()));
 
-        // 將時間加入
-        member.setCreated_time(new Timestamp(System.currentTimeMillis()));
-        member.setUpdate_time(new Timestamp(System.currentTimeMillis()));
+            // 將時間加入
+            member.setCreated_time(new Timestamp(System.currentTimeMillis()));
+            member.setUpdate_time(new Timestamp(System.currentTimeMillis()));
 
-        // 儲存進DB
-        return R.success(dto.convert(dao.save(member)));
+            // 儲存進DB
+            return R.success(dto.convert(dao.save(member)));
+        }catch (Exception e){
+            e.printStackTrace();
+            return R.fail(e.getMessage());
+        }
+
     }
 
     public Result getAllMemberWithoutPassword(){
