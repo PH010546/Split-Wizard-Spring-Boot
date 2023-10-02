@@ -16,8 +16,10 @@ public class MemberGroupConn {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private Integer member_id;
-    private Integer group_id;
+    @Column(name = "member_id")
+    private Integer memberId;
+    @Column(name = "group_id")
+    private Integer groupId;
     private Long net;
     private Timestamp update_time;
 

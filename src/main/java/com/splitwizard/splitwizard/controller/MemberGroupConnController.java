@@ -19,7 +19,7 @@ public class MemberGroupConnController {
 
     @PostMapping(value = "/addMemberToGroup")
     public Result addMemberToGroup(@RequestBody MemberGroupConn mgc){
-        return service.addMemberToGroup(mgc.getMember_id(), mgc.getGroup_id());
+        return service.addMemberToGroup(mgc.getMemberId(), mgc.getGroupId());
     }
 
 }

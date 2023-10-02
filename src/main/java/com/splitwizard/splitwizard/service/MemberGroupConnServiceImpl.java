@@ -25,8 +25,8 @@ public class MemberGroupConnServiceImpl implements MemberGroupConnService{
         try{
             MemberGroupConn mgc = new MemberGroupConn();
 
-            mgc.setMember_id(memberId);
-            mgc.setGroup_id(groupId);
+            mgc.setMemberId(memberId);
+            mgc.setGroupId(groupId);
             mgc.setNet(0L);
             mgc.setUpdate_time(new Timestamp(System.currentTimeMillis()));
 
