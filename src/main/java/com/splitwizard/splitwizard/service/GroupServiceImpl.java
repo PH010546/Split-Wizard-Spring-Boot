@@ -2,6 +2,7 @@ package com.splitwizard.splitwizard.service;
 
 import com.splitwizard.splitwizard.DAO.GroupRepository;
 import com.splitwizard.splitwizard.Util.GroupDTO;
+import com.splitwizard.splitwizard.Util.MemberGroupConnDTO;
 import com.splitwizard.splitwizard.Util.Result;
 import com.splitwizard.splitwizard.model.Group;
 import com.splitwizard.splitwizard.model.Member;
@@ -19,12 +20,14 @@ public class GroupServiceImpl implements GroupService{
 
     private final GroupRepository dao;
     private final Result R;
-    private final GroupDTO dto;
+    private final GroupDTO groupDTO;
+    private final MemberGroupConnDTO memberGroupConnDTO;
     @Autowired
     public GroupServiceImpl(GroupRepository dao){
         this.dao = dao;
         this.R = new Result();
-        this.dto = new GroupDTO();
+        this.groupDTO = new GroupDTO();
+        this.memberGroupConnDTO = new MemberGroupConnDTO();
     }
 
     @Override
@@ -44,7 +47,7 @@ public class GroupServiceImpl implements GroupService{
             group.setStatus(false);
 
             // save & return DTO
-            return R.success(dto.convert(dao.save(group)));
+            return R.success(groupDTO.convert(dao.save(group)));
 
         }catch (Exception e){
             e.printStackTrace();
@@ -67,7 +70,7 @@ public class GroupServiceImpl implements GroupService{
         group.setName(name);
         group.setUpdate_time(new Timestamp(System.currentTimeMillis()));
 
-        return R.success(dto.convert(dao.save(group)));
+        return R.success(groupDTO.convert(dao.save(group)));
     }
 
     @Override
@@ -85,7 +88,7 @@ public class GroupServiceImpl implements GroupService{
     @Override
     public Result findAllCurrentGroupsWithMembers(Integer currentUserId) {
         try{
-
+            // TODO: need to modify
             List<Group> groupList = dao.findAll();
             List<Group> resultList = new ArrayList<>() ;
 
@@ -96,7 +99,7 @@ public class GroupServiceImpl implements GroupService{
                     }
                 }
             }
-            return R.success(resultList);
+            return R.success(memberGroupConnDTO.convertList(resultList));
         }catch (Exception e){
             e.printStackTrace();
             return R.fail(e.getMessage());
