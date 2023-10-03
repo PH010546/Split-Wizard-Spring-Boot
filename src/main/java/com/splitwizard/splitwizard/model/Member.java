@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.Email;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,18 +22,11 @@ public class Member {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Email
     private String account;
     private String name;
     private String password;
     private Timestamp created_time;
     private Timestamp update_time;
-
-    public Member(String account, String name, String password){
-
-        this.account = account;
-        this.name = name;
-        this.password = password;
-
-    }
 
 }

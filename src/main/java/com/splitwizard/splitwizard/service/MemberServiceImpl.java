@@ -4,11 +4,15 @@ import com.splitwizard.splitwizard.DAO.MemberRepository;
 import com.splitwizard.splitwizard.Util.MemberDTO;
 import com.splitwizard.splitwizard.Util.Result;
 import com.splitwizard.splitwizard.model.Member;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 @Service
 public class MemberServiceImpl implements MemberService{
@@ -17,15 +21,16 @@ public class MemberServiceImpl implements MemberService{
     private final BCryptPasswordEncoder passwordEncoder;
     private final Result R;
     private final MemberDTO dto;
+    private final HttpSession session;
 
     @Autowired
-    public MemberServiceImpl(MemberRepository dao){
+    public MemberServiceImpl(MemberRepository dao, HttpSession session){
 
         this.dao = dao;
         this.passwordEncoder = new BCryptPasswordEncoder();
         this.R = new Result();
         this.dto = new MemberDTO();
-
+        this.session = session;
     }
 
     public Result getById(Integer id){
@@ -88,7 +93,16 @@ public class MemberServiceImpl implements MemberService{
     public Result getAllMemberWithoutPassword(){
 
         try{
-            return R.success(dto.convertList(dao.findAll()));
+            List<Member> members = dao.findAll();
+            List<Member> result = new ArrayList<>();
+
+            for (Member m : members){
+                if (!Objects.equals(m.getId(), session.getAttribute("currentUser"))){
+                    result.add(m);
+                }
+            }
+
+            return R.success(dto.convertList(result));
         }catch (Exception e){
             e.printStackTrace();
             return R.fail(e.getMessage());
