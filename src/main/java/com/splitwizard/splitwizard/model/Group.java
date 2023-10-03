@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.sql.Timestamp;
+import java.util.Set;
 
 @Entity
 @Data
@@ -17,6 +18,7 @@ public class Group {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(insertable=false, updatable=false)
     private Integer id;
 
     private String name;
@@ -26,4 +28,11 @@ public class Group {
     private Timestamp created_time;
     private Timestamp update_time;
 
+    @ManyToMany
+    @JoinTable(
+            name = "member_group_conn",
+            joinColumns = @JoinColumn(name = "group_id"),
+            inverseJoinColumns = @JoinColumn(name = "member_id")
+    )
+    Set<Member> members;
 }

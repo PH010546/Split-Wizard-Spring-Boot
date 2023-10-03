@@ -4,10 +4,14 @@ import com.splitwizard.splitwizard.DAO.GroupRepository;
 import com.splitwizard.splitwizard.Util.GroupDTO;
 import com.splitwizard.splitwizard.Util.Result;
 import com.splitwizard.splitwizard.model.Group;
+import com.splitwizard.splitwizard.model.Member;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -21,20 +25,6 @@ public class GroupServiceImpl implements GroupService{
         this.dao = dao;
         this.R = new Result();
         this.dto = new GroupDTO();
-    }
-
-
-    @Override
-    public Result getById(Integer id) {
-
-        try{
-
-            return R.success(dao.findById(id));
-
-        }catch (Exception e){
-            e.printStackTrace();
-            return R.fail(e.getMessage());
-        }
     }
 
     @Override
@@ -86,6 +76,27 @@ public class GroupServiceImpl implements GroupService{
         try{
             dao.deleteById(id);
             return R.success(id);
+        }catch (Exception e){
+            e.printStackTrace();
+            return R.fail(e.getMessage());
+        }
+    }
+
+    @Override
+    public Result findAllCurrentGroupsWithMembers(Integer currentUserId) {
+        try{
+
+            List<Group> groupList = dao.findAll();
+            List<Group> resultList = new ArrayList<>() ;
+
+            for (Group g : groupList){
+                for (Member m : g.getMembers()){
+                    if (Objects.equals(m.getId(), currentUserId)){
+                        resultList.add(g);
+                    }
+                }
+            }
+            return R.success(resultList);
         }catch (Exception e){
             e.printStackTrace();
             return R.fail(e.getMessage());

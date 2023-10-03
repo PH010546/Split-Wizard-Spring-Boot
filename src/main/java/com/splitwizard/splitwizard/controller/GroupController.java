@@ -21,7 +21,7 @@ public class GroupController {
     @GetMapping(value = "/groups")
     public Result getGroup(HttpSession session){
         System.out.println(session.getAttribute("currentUser"));
-        return service.getById((Integer) session.getAttribute("currentUser"));
+        return service.findAllCurrentGroupsWithMembers((Integer) session.getAttribute("currentUser"));
     }
 
     @PostMapping(value = "/addGroup")
