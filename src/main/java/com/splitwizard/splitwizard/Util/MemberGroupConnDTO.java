@@ -2,30 +2,33 @@ package com.splitwizard.splitwizard.Util;
 
 import com.splitwizard.splitwizard.model.Group;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Getter @Setter
+@NoArgsConstructor
 public class MemberGroupConnDTO {
 
-    private Integer group_id;
-    private String group_name;
+    private Integer groupId;
+    private String groupName;
     private List<MemberDTO> groupMembers;
 
-    // TODO: maybe can add constructor so in the method we can just call it.
+    public MemberGroupConnDTO(Integer groupId, String groupName, List<MemberDTO> groupMembers){
+        this.groupId = groupId;
+        this.groupName = groupName;
+        this.groupMembers = groupMembers;
+    }
 
     public MemberGroupConnDTO convert(Group group){
 
-        MemberGroupConnDTO dto = new MemberGroupConnDTO();
         MemberDTO memberDTO= new MemberDTO();
-
-        dto.setGroup_id(group.getId());
-        dto.setGroup_name(group.getName());
-        dto.setGroupMembers(memberDTO.convertList(group.getMembers().stream().toList()));
-
-        return dto;
+        return new MemberGroupConnDTO(
+                group.getId(),
+                group.getName(),
+                memberDTO.convertList(group.getMembers().stream().toList()));
     }
 
     public List<MemberGroupConnDTO> convertList(List<Group> groups){
