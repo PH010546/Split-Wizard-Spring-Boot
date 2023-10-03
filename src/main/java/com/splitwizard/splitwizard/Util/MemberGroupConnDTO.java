@@ -12,7 +12,7 @@ public class MemberGroupConnDTO {
 
     private Integer group_id;
     private String group_name;
-    private List<MemberDTO> members;
+    private List<MemberDTO> groupMembers;
 
     // TODO: maybe can add constructor so in the method we can just call it.
 
@@ -23,7 +23,7 @@ public class MemberGroupConnDTO {
 
         dto.setGroup_id(group.getId());
         dto.setGroup_name(group.getName());
-        dto.setMembers(memberDTO.convertList(group.getMembers().stream().toList()));
+        dto.setGroupMembers(memberDTO.convertList(group.getMembers().stream().toList()));
 
         return dto;
     }
