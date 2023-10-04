@@ -4,6 +4,7 @@ import com.splitwizard.splitwizard.DAO.MemberRepository;
 import com.splitwizard.splitwizard.Util.MemberDTO;
 import com.splitwizard.splitwizard.Util.Result;
 import com.splitwizard.splitwizard.model.Member;
+import com.splitwizard.splitwizard.service.intf.MemberService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -15,7 +16,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Service
-public class MemberServiceImpl implements MemberService{
+public class MemberServiceImpl implements MemberService {
 
     private final MemberRepository dao;
     private final BCryptPasswordEncoder passwordEncoder;

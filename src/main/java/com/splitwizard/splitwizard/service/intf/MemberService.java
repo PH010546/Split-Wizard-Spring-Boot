@@ -9,5 +9,4 @@ public interface MemberService {
     Result getAll();
     Result login(String account, String password);
     Result register(Member member);
-    Result logout();
 }

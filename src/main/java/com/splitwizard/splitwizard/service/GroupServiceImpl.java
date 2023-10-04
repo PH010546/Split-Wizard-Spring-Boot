@@ -6,6 +6,7 @@ import com.splitwizard.splitwizard.Util.MemberGroupConnDTO;
 import com.splitwizard.splitwizard.Util.Result;
 import com.splitwizard.splitwizard.model.Group;
 import com.splitwizard.splitwizard.model.Member;
+import com.splitwizard.splitwizard.service.intf.GroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +17,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 @Service
-public class GroupServiceImpl implements GroupService{
+public class GroupServiceImpl implements GroupService {
 
     private final GroupRepository dao;
     private final Result R;
