@@ -1,4 +1,4 @@
-package com.splitwizard.splitwizard.service;
+package com.splitwizard.splitwizard.service.intf;
 
 import com.splitwizard.splitwizard.Util.Result;
 import com.splitwizard.splitwizard.model.Group;

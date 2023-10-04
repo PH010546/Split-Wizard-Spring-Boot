@@ -1,10 +1,7 @@
-package com.splitwizard.splitwizard.service;
+package com.splitwizard.splitwizard.service.intf;
 
 import com.splitwizard.splitwizard.Util.Result;
 import com.splitwizard.splitwizard.model.Member;
-import org.springframework.http.ResponseEntity;
-
-import java.util.List;
 
 public interface MemberService {
 
@@ -12,4 +9,5 @@ public interface MemberService {
     Result getAll();
     Result login(String account, String password);
     Result register(Member member);
+    Result logout();
 }
