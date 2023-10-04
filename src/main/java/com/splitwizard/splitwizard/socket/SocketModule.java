@@ -20,14 +20,17 @@ public class SocketModule {
         server.addConnectListener(onConnected());
         server.addDisconnectListener(onDisconnected());
         server.addEventListener("send_message", Message.class, onChatReceived());
+        server.addEventListener("notificationToServer", Message.class, onChatReceived());
 
     }
 
     private DataListener<Message> onChatReceived() {
         return (senderClient, data, ackSender) -> {
             log.info(data.toString());
-            senderClient.getNamespace().getBroadcastOperations().sendEvent("get_message", data.getMessage());
-//            service.sendMessage("get_message", senderClient, data.getMessage());
+//            senderClient.getNamespace().getBroadcastOperations().sendEvent("get_message", data.getMessage());
+//            senderClient.getNamespace().getBroadcastOperations().sendEvent("notificationToClient", data.getMessage());
+            service.sendMessage("notificationToClient", senderClient, data.getMessage());
+
         };
     }
 
