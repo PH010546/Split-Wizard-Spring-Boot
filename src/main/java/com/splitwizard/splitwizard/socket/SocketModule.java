@@ -25,6 +25,7 @@ public class SocketModule {
     }
 
     private DataListener<Message> onChatReceived() {
+        log.info("message received");
         return (senderClient, data, ackSender) -> {
             log.info(data.toString());
 //            senderClient.getNamespace().getBroadcastOperations().sendEvent("get_message", data.getMessage());
