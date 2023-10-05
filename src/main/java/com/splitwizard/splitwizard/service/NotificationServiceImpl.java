@@ -1,6 +1,7 @@
 package com.splitwizard.splitwizard.service;
 
 import com.splitwizard.splitwizard.DAO.NotificationRepository;
+import com.splitwizard.splitwizard.Util.NotificationDTO;
 import com.splitwizard.splitwizard.Util.Result;
 import com.splitwizard.splitwizard.model.Notification;
 import com.splitwizard.splitwizard.service.intf.NotificationService;
@@ -19,11 +20,13 @@ public class NotificationServiceImpl implements NotificationService {
     private final NotificationRepository dao;
     private final Result R;
     private final HttpSession session;
+    private final NotificationDTO dto;
     @Autowired
     public NotificationServiceImpl(NotificationRepository dao, HttpSession session){
         this.dao = dao;
         this.R = new Result();
         this.session = session;
+        this.dto = new NotificationDTO();
     }
 
     @Override
@@ -47,7 +50,7 @@ public class NotificationServiceImpl implements NotificationService {
             Page<Notification> page = dao.findNotificationsByReceiverId(currentUserId,
                     PageRequest.of(0, 8, Sort.by(Sort.Direction.DESC, "createdTime")));
 
-            return R.success(page);
+            return R.success(dto.convertList(page.getContent()));
 
         }catch (Exception e){
             e.printStackTrace();

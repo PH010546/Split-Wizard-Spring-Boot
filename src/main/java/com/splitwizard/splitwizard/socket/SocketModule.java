@@ -29,7 +29,7 @@ public class SocketModule {
             log.info(data.toString());
 //            senderClient.getNamespace().getBroadcastOperations().sendEvent("get_message", data.getMessage());
 //            senderClient.getNamespace().getBroadcastOperations().sendEvent("notificationToClient", data.getMessage());
-            service.sendMessage("notificationToClient", senderClient, data.getMessage());
+            service.sendMessage("notificationToClient", senderClient, data.getMessage(), data.getData());
 
         };
     }

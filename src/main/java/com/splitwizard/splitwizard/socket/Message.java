@@ -6,13 +6,14 @@ import lombok.Data;
 public class Message {
     private MessageType type;
     private String message;
-    private String room;
+    private Object data;
 
     public Message() {
     }
 
-    public Message(MessageType type, String message) {
+    public Message(MessageType type, String message, Object data) {
         this.type = type;
         this.message = message;
+        this.data = data;
     }
 }
