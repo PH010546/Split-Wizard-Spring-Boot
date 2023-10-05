@@ -12,13 +12,15 @@ import java.util.List;
 @NoArgsConstructor
 public class MemberGroupConnDTO {
 
-    private Integer groupId;
-    private String groupName;
+    // id = groupId, name = groupName
+
+    private Integer id;
+    private String name;
     private List<MemberDTO> groupMembers;
 
     public MemberGroupConnDTO(Integer groupId, String groupName, List<MemberDTO> groupMembers){
-        this.groupId = groupId;
-        this.groupName = groupName;
+        this.id = groupId;
+        this.name = groupName;
         this.groupMembers = groupMembers;
     }
 
