@@ -21,17 +21,16 @@ public class Notification {
     @Column(insertable = false)
     private Boolean read;
     private Integer type;
-    @Column(name = "group_id")
-    private Integer groupId;
+//    @Column(name = "group_id")
+//    private Integer groupId;
     @Column(name = "sender_id")
     private Integer senderId;
     @Column(name = "receiver_id")
     private Integer receiverId;
 
 
-    @OneToOne
-    @JoinTable(name = "group")
-    @JoinColumn(name = "group_id", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "group_id", foreignKey = @ForeignKey(name = "notification_group_id_fk"))
     Group group;
 
 }

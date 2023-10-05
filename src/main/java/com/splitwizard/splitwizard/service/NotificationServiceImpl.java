@@ -6,6 +6,9 @@ import com.splitwizard.splitwizard.model.Notification;
 import com.splitwizard.splitwizard.service.intf.NotificationService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
@@ -39,11 +42,30 @@ public class NotificationServiceImpl implements NotificationService {
 
     @Override
     public Result getNotificationsWithLimit(Integer currentUserId) {
-        return null;
+
+        try{
+            Page<Notification> page = dao.findNotificationsByReceiverId(currentUserId,
+                    PageRequest.of(0, 8, Sort.by(Sort.Direction.DESC, "createdTime")));
+
+            return R.success(page);
+
+        }catch (Exception e){
+            e.printStackTrace();
+            return R.fail(e.getMessage());
+        }
+
     }
 
     @Override
     public Result getAllNotifications(Integer currentUserId) {
-        return null;
+
+        try{
+
+            return R.success(dao.findAllByReceiverId(currentUserId));
+
+        }catch (Exception e){
+            e.printStackTrace();
+            return R.fail(e.getMessage());
+        }
     }
 }
