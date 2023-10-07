@@ -30,5 +30,5 @@ public enum NotificationType {
 
     public static NotificationType of(Integer code){
         return FindEnum.byCodeInMap.get(code);
-    };
+    }
 }
