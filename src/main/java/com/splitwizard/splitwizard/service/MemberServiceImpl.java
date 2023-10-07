@@ -1,7 +1,7 @@
 package com.splitwizard.splitwizard.service;
 
 import com.splitwizard.splitwizard.DAO.MemberRepository;
-import com.splitwizard.splitwizard.Util.MemberDTO;
+import com.splitwizard.splitwizard.DTO.MemberDTO;
 import com.splitwizard.splitwizard.Util.Result;
 import com.splitwizard.splitwizard.model.Member;
 import com.splitwizard.splitwizard.service.intf.MemberService;

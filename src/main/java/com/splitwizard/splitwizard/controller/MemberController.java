@@ -1,6 +1,6 @@
 package com.splitwizard.splitwizard.controller;
 
-import com.splitwizard.splitwizard.Util.MemberDTO;
+import com.splitwizard.splitwizard.DTO.MemberDTO;
 import com.splitwizard.splitwizard.Util.Result;
 import com.splitwizard.splitwizard.model.Member;
 import com.splitwizard.splitwizard.service.MemberServiceImpl;
@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class MemberController {
+
+    // TODO: change the request body to VO
 
     private final MemberServiceImpl service;
     @Autowired

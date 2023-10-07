@@ -1,4 +1,4 @@
-package com.splitwizard.splitwizard.Util;
+package com.splitwizard.splitwizard.DTO;
 
 import com.splitwizard.splitwizard.model.Group;
 import lombok.Getter;

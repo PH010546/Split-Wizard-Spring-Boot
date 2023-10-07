@@ -1,18 +1,24 @@
-package com.splitwizard.splitwizard.Util;
+package com.splitwizard.splitwizard.DTO;
 
+import com.splitwizard.splitwizard.DAO.MemberRepository;
 import com.splitwizard.splitwizard.model.Member;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Getter @Setter
+@Component
 public class MemberDTO {
 
     private Integer id;
     private String account;
     private String name;
+    @Autowired
+    private MemberRepository dao;
 
     public MemberDTO convert(Member member){
 
@@ -35,6 +41,10 @@ public class MemberDTO {
 
         return dtoList;
 
+    }
+
+    public Member convertDTOToPOJO(MemberRepository dao){
+        return dao.getReferenceById(this.getId());
     }
 
 }

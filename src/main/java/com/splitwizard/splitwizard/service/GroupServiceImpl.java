@@ -1,8 +1,8 @@
 package com.splitwizard.splitwizard.service;
 
 import com.splitwizard.splitwizard.DAO.GroupRepository;
-import com.splitwizard.splitwizard.Util.GroupDTO;
-import com.splitwizard.splitwizard.Util.MemberGroupConnDTO;
+import com.splitwizard.splitwizard.DTO.GroupDTO;
+import com.splitwizard.splitwizard.DTO.MemberGroupConnDTO;
 import com.splitwizard.splitwizard.Util.Result;
 import com.splitwizard.splitwizard.model.Group;
 import com.splitwizard.splitwizard.model.Member;

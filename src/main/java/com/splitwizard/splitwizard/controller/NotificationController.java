@@ -1,6 +1,7 @@
 package com.splitwizard.splitwizard.controller;
 
 import com.splitwizard.splitwizard.Util.Result;
+import com.splitwizard.splitwizard.VO.NotificationVO;
 import com.splitwizard.splitwizard.model.Notification;
 import com.splitwizard.splitwizard.service.NotificationServiceImpl;
 import jakarta.servlet.http.HttpSession;
@@ -19,8 +20,8 @@ public class NotificationController {
         this.service = service;
     }
     @PostMapping("/addNotifications")
-    public Result addNotification(@RequestBody Notification notification){
-        return service.addNotification(notification);
+    public Result addNotification(@RequestBody NotificationVO notificationVO){
+        return service.addNotification(notificationVO);
     }
 
     @GetMapping("/getNotifications")
