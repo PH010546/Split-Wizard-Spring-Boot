@@ -2,17 +2,13 @@ package com.splitwizard.splitwizard.socket;
 
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class Message {
-    private MessageType type;
-    private String message;
-    private String room;
 
-    public Message() {
-    }
+    private String senderId;
+    private List<String> targetUserIds;
+    private Object message;
 
-    public Message(MessageType type, String message) {
-        this.type = type;
-        this.message = message;
-    }
 }
