@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 @Service
 public interface NotificationService {
 
-    Result addNotification(NotificationVO notificationVo);
+    Result addNotifications(NotificationVO notificationVo);
     Result getNotificationsWithLimit(Integer currentUserId);
     Result getAllNotifications(Integer currentUserId);
 

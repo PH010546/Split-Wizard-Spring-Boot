@@ -26,6 +26,7 @@ public class NotificationVO {
     private Integer groupId;
     private Integer senderId;
     private Integer receiverId;
+    private Integer[] receiverIds;
 
     public NotificationVO convertDTOToVO(NotificationDTO notificationDTO){
 

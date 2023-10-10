@@ -20,7 +20,7 @@ public class NotificationController {
     }
     @PostMapping("/addNotifications")
     public Result addNotification(@RequestBody NotificationVO notificationVO){
-        return service.addNotification(notificationVO);
+        return service.addNotifications(notificationVO);
     }
 
     @GetMapping("/getNotifications")

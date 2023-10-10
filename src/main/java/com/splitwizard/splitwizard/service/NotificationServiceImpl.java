@@ -43,15 +43,27 @@ public class NotificationServiceImpl implements NotificationService {
     }
 
     @Override
-    public Result addNotification(NotificationVO notificationVO) {
+    public Result addNotifications(NotificationVO notificationVO) {
         try{
 
             notificationVO.setSenderId((Integer) session.getAttribute("currentUser"));
-            if (Objects.equals(notificationVO.getReceiverId(), session.getAttribute("currentUser"))) throw new Exception("sender and receiver cannot be the same member!");
+            int count = 0;
 
-            Notification savedPOJO = dao.save(notificationVO.convertVOToDTO(groupDAO, memberDAO).convertDTOToPOJO(groupDAO, memberDAO));
+            for (Integer i : notificationVO.getReceiverIds()){
 
-            return R.success(dto.convertPOJOToDTO(savedPOJO).convertDTOToVO());
+                // if receiver equals sender then don't have to do anything.
+                if (Objects.equals(notificationVO.getSenderId(), i)) continue;
+
+                notificationVO.setReceiverId(i);
+                dao.save(notificationVO.convertVOToDTO(groupDAO, memberDAO).convertDTOToPOJO(groupDAO, memberDAO));
+                count++;
+            }
+
+//            if (Objects.equals(notificationVO.getReceiverId(), session.getAttribute("currentUser"))) throw new Exception("sender and receiver cannot be the same member!");
+
+//            Notification savedPOJO = dao.save(notificationVO.convertVOToDTO(groupDAO, memberDAO).convertDTOToPOJO(groupDAO, memberDAO));
+
+            return R.success(count);
         }catch (Exception e){
             e.printStackTrace();
             return R.fail(e.getMessage());
