@@ -21,6 +21,7 @@ public class Group {
 
     private String name;
     // need to check if we still want this column or not.
+    @Column(insertable = false)
     private Boolean status;
     @Column(insertable = false)
     private Boolean redirect;
