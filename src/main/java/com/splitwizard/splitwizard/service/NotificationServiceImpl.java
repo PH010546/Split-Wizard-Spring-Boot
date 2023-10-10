@@ -46,16 +46,12 @@ public class NotificationServiceImpl implements NotificationService {
     public Result addNotification(NotificationVO notificationVO) {
         try{
 
-
-
             notificationVO.setSenderId((Integer) session.getAttribute("currentUser"));
             if (Objects.equals(notificationVO.getReceiverId(), session.getAttribute("currentUser"))) throw new Exception("sender and receiver cannot be the same member!");
 
             Notification savedPOJO = dao.save(notificationVO.convertVOToDTO(groupDAO, memberDAO).convertDTOToPOJO(groupDAO, memberDAO));
 
             return R.success(dto.convertPOJOToDTO(savedPOJO).convertDTOToVO());
-//            return R.success(dao.save(notificationVO.convertVOToDTO(groupDAO, memberDAO).convertDTOToPOJO(groupDAO, memberDAO)));
-
         }catch (Exception e){
             e.printStackTrace();
             return R.fail(e.getMessage());
@@ -75,7 +71,11 @@ public class NotificationServiceImpl implements NotificationService {
 
                 switch (NotificationType.of(d.getType().getCode())) {
                     case SYSTEM -> d.setText(SYSTEM.getText());
-                    case INVITATION -> d.setText(INVITATION.getText() + d.getGroup().getName());
+                    case INVITATION -> d.setText(
+                            d.getSender().getName() + "(" + d.getSender().getAccount() + ")"
+                            + INVITATION.getText()
+                            + d.getGroup().getName());
+                    // TODO: should show who edited the item.
                     case ITEM -> d.setText("於 " + d.getGroup().getName() + " 中有" + ITEM.getText());
                     default -> {}
                 }

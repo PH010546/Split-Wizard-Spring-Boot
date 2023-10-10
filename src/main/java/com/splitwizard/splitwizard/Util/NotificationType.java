@@ -8,7 +8,7 @@ import java.util.Map;
 @Getter
 public enum NotificationType {
     SYSTEM(101, "System", "更新囉寶貝"),
-    INVITATION(201, "Invitation", "您已被邀請至 "),
+    INVITATION(201, "Invitation", " 已邀請您至 "),
     ITEM(301, "Item", " 有新增/更新紀錄");
 
     private final Integer code;

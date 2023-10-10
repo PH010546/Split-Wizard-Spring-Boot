@@ -36,11 +36,12 @@ public class NotificationVO {
         vo.setRead(notificationDTO.getRead());
         vo.setCreatedTime(notificationDTO.getCreatedTime());
         vo.setType(notificationDTO.getType());
-        if (notificationDTO.getGroup() == null){
-            vo.setGroupId(null);
-        }else{
-            vo.setGroupId(notificationDTO.getGroup().getId());
-        }
+        vo.setGroupId(null);
+        vo.setSenderId(null);
+        vo.setReceiverId(null);
+        if (notificationDTO.getGroup() != null) vo.setGroupId(notificationDTO.getGroup().getId());
+        if (notificationDTO.getSender() != null) vo.setSenderId(notificationDTO.getSender().getId());
+        if (notificationDTO.getReceiver() != null) vo.setReceiverId(notificationDTO.getReceiver().getId());
 
         return vo;
     }

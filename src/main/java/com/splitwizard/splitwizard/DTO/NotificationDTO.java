@@ -55,7 +55,7 @@ public class NotificationDTO {
         result.setReceiver(null);
         if (notification.getGroup() != null) result.setGroup(groupDTO.convert(notification.getGroup()));
         if (notification.getSender() != null) result.setSender(memberDTO.convert(notification.getSender()));
-        if (notification.getReceiver() != null) result.setSender(memberDTO.convert(notification.getReceiver()));
+        if (notification.getReceiver() != null) result.setReceiver(memberDTO.convert(notification.getReceiver()));
 
         return result;
     }
