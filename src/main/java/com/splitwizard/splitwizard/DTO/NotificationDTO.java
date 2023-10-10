@@ -4,7 +4,7 @@ import com.splitwizard.splitwizard.DAO.GroupRepository;
 import com.splitwizard.splitwizard.DAO.MemberRepository;
 import com.splitwizard.splitwizard.Util.NotificationType;
 import com.splitwizard.splitwizard.VO.NotificationVO;
-import com.splitwizard.splitwizard.model.Notification;
+import com.splitwizard.splitwizard.POJO.Notification;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

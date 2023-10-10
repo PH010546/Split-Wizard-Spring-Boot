@@ -1,7 +1,7 @@
 package com.splitwizard.splitwizard.DTO;
 
 import com.splitwizard.splitwizard.DAO.GroupRepository;
-import com.splitwizard.splitwizard.model.Group;
+import com.splitwizard.splitwizard.POJO.Group;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.stereotype.Component;

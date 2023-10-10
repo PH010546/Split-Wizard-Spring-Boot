@@ -1,7 +1,7 @@
 package com.splitwizard.splitwizard.controller;
 
 import com.splitwizard.splitwizard.Util.Result;
-import com.splitwizard.splitwizard.model.Group;
+import com.splitwizard.splitwizard.POJO.Group;
 import com.splitwizard.splitwizard.service.GroupServiceImpl;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;

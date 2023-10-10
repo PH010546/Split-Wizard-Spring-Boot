@@ -2,7 +2,7 @@ package com.splitwizard.splitwizard.service;
 
 import com.splitwizard.splitwizard.DAO.MemberGroupConnRepository;
 import com.splitwizard.splitwizard.Util.Result;
-import com.splitwizard.splitwizard.model.MemberGroupConn;
+import com.splitwizard.splitwizard.POJO.MemberGroupConn;
 import com.splitwizard.splitwizard.service.intf.MemberGroupConnService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

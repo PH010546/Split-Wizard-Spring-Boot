@@ -2,7 +2,6 @@ package com.splitwizard.splitwizard.controller;
 
 import com.splitwizard.splitwizard.Util.Result;
 import com.splitwizard.splitwizard.VO.NotificationVO;
-import com.splitwizard.splitwizard.model.Notification;
 import com.splitwizard.splitwizard.service.NotificationServiceImpl;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;

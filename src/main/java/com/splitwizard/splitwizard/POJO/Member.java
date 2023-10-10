@@ -1,4 +1,4 @@
-package com.splitwizard.splitwizard.model;
+package com.splitwizard.splitwizard.POJO;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

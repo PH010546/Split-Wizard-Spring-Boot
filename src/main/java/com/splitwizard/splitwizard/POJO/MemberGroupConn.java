@@ -1,4 +1,4 @@
-package com.splitwizard.splitwizard.model;
+package com.splitwizard.splitwizard.POJO;
 
 import jakarta.persistence.*;
 import lombok.Data;
@@ -12,6 +12,7 @@ import java.sql.Timestamp;
 @Data
 @NoArgsConstructor
 @Getter @Setter
+@Table(name = "member_group_conn")
 public class MemberGroupConn {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

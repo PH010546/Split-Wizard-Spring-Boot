@@ -1,7 +1,7 @@
 package com.splitwizard.splitwizard.DTO;
 
 import com.splitwizard.splitwizard.DAO.MemberRepository;
-import com.splitwizard.splitwizard.model.Member;
+import com.splitwizard.splitwizard.POJO.Member;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,6 +1,6 @@
 package com.splitwizard.splitwizard.DAO;
 
-import com.splitwizard.splitwizard.model.Notification;
+import com.splitwizard.splitwizard.POJO.Notification;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

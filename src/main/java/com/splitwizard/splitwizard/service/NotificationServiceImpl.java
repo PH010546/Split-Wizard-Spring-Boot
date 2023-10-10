@@ -7,7 +7,7 @@ import com.splitwizard.splitwizard.DTO.NotificationDTO;
 import com.splitwizard.splitwizard.Util.NotificationType;
 import com.splitwizard.splitwizard.Util.Result;
 import com.splitwizard.splitwizard.VO.NotificationVO;
-import com.splitwizard.splitwizard.model.Notification;
+import com.splitwizard.splitwizard.POJO.Notification;
 import com.splitwizard.splitwizard.service.intf.NotificationService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;

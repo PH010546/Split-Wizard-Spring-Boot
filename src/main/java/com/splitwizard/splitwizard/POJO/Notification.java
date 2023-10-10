@@ -1,4 +1,4 @@
-package com.splitwizard.splitwizard.model;
+package com.splitwizard.splitwizard.POJO;
 
 import com.splitwizard.splitwizard.Util.NotificationType;
 import com.splitwizard.splitwizard.Util.NotificationTypeConverter;

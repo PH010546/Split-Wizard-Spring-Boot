@@ -1,6 +1,6 @@
 package com.splitwizard.splitwizard.DAO;
 
-import com.splitwizard.splitwizard.model.Member;
+import com.splitwizard.splitwizard.POJO.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
