@@ -88,7 +88,8 @@ public class NotificationServiceImpl implements NotificationService {
                             + INVITATION.getText()
                             + d.getGroup().getName());
                     // TODO: should show who edited the item.
-                    case ITEM -> d.setText("於 " + d.getGroup().getName() + " 中有" + ITEM.getText());
+                    case ITEM_ADD -> d.setText("於 " + d.getGroup().getName() + ITEM_ADD.getText());
+                    case ITEM_UPDATE -> d.setText("於 " + d.getGroup().getName() + ITEM_UPDATE.getText());
                     default -> {}
                 }
             }
