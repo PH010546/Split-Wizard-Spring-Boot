@@ -37,5 +37,9 @@ public class GroupController {
     public Result deleteGroup(Integer id){
         return service.deleteGroup(id);
     }
+    @PutMapping("/groups/{groupId}/resetRedirect")
+    public Result resetRedirect(@PathVariable(name = "groupId")Integer groupId){
+        return service.resetRedirect(groupId);
+    }
 
 }

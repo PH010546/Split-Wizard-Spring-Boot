@@ -106,4 +106,18 @@ public class GroupServiceImpl implements GroupService {
             return R.fail(e.getMessage());
         }
     }
+
+    @Override
+    public Result resetRedirect(Integer groupId) {
+
+        try{
+            Group group = dao.getReferenceById(groupId);
+            group.setRedirect(false);
+            dao.save(group);
+            return R.success(null);
+        }catch (Exception e){
+            e.printStackTrace();
+            return R.fail(e.getMessage());
+        }
+    }
 }
