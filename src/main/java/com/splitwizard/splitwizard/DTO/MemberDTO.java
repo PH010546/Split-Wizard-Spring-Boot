@@ -4,7 +4,6 @@ import com.splitwizard.splitwizard.DAO.MemberRepository;
 import com.splitwizard.splitwizard.POJO.Member;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -17,8 +16,6 @@ public class MemberDTO {
     private Integer id;
     private String account;
     private String name;
-    @Autowired
-    private MemberRepository dao;
 
     public MemberDTO convert(Member member){
 

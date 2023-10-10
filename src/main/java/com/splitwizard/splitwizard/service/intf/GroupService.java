@@ -12,5 +12,6 @@ public interface GroupService {
     Result deleteGroup(Integer id);
     Result findAllCurrentGroupsWithMembers(Integer currentUserId);
     Result resetRedirect(Integer groupId);
+    Result getMembersInGroup(Integer groupId);
 
 }

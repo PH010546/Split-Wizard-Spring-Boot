@@ -2,6 +2,7 @@ package com.splitwizard.splitwizard.service;
 
 import com.splitwizard.splitwizard.DAO.GroupRepository;
 import com.splitwizard.splitwizard.DTO.GroupDTO;
+import com.splitwizard.splitwizard.DTO.MemberDTO;
 import com.splitwizard.splitwizard.DTO.MemberGroupConnDTO;
 import com.splitwizard.splitwizard.POJO.Group;
 import com.splitwizard.splitwizard.POJO.Member;
@@ -11,10 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class GroupServiceImpl implements GroupService {
@@ -106,6 +104,28 @@ public class GroupServiceImpl implements GroupService {
             group.setUpdateTime(new Timestamp(System.currentTimeMillis()));
             dao.save(group);
             return R.success(null);
+        }catch (Exception e){
+            e.printStackTrace();
+            return R.fail(e.getMessage());
+        }
+    }
+
+    @Override
+    public Result getMembersInGroup(Integer groupId) {
+
+        try{
+            MemberDTO memberDTO = new MemberDTO();
+
+            Group group = dao.getReferenceById(groupId);
+
+            Set<Member> set = group.getMembers();
+            List<MemberDTO> members = new ArrayList<>();
+
+            for (Member m : set){
+                members.add(memberDTO.convert(m));
+            }
+
+            return R.success(members);
         }catch (Exception e){
             e.printStackTrace();
             return R.fail(e.getMessage());

@@ -41,5 +41,9 @@ public class GroupController {
     public Result resetRedirect(@PathVariable(name = "groupId")Integer groupId){
         return service.resetRedirect(groupId);
     }
+    @GetMapping("/groups/{groupId}/members")
+    public Result getMembersInGroup(@PathVariable(name = "groupId") Integer groupId){
+        return service.getMembersInGroup(groupId);
+    }
 
 }
