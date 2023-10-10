@@ -12,17 +12,18 @@ import java.sql.Timestamp;
 @Data
 @NoArgsConstructor
 @Getter @Setter
-@Table(name = "member_group_conn")
-public class MemberGroupConn {
+@Table(name = "item_detail")
+public class ItemDetail {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Column(name = "member_id")
     private Integer memberId;
-    @Column(name = "group_id")
-    private Integer groupId;
-    private Long net;
-    @Column(name = "update_time")
+    private Integer itemId;
+    private Long amount;
+    private Boolean payer;
+    @Column(name = "created_time", insertable = false, updatable = false)
+    private Timestamp createdTime;
+    @Column(name = "update_time", insertable = false)
     private Timestamp updateTime;
-
 }

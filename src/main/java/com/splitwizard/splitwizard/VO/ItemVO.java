@@ -10,8 +10,8 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 public class ItemVO {
     private Integer id;
-    private String name;
-    private Integer amount;
+    private String itemName;
+    private Integer itemAmount;
     private String itemTime;
     private Timestamp createdTime;
     private Timestamp updateTime;
@@ -20,8 +20,8 @@ public class ItemVO {
         Item pojo = new Item();
 
         pojo.setId(this.id);
-        pojo.setName(this.name);
-        pojo.setAmount(this.amount);
+        pojo.setName(this.itemName);
+        pojo.setAmount(this.itemAmount);
         pojo.setItemTime(this.itemTime);
         pojo.setCreatedTime(this.createdTime);
         pojo.setUpdateTime(this.updateTime);
@@ -33,9 +33,9 @@ public class ItemVO {
         ItemVO vo = new ItemVO();
 
         vo.setId(pojo.getId());
-        vo.setName(pojo.getName());
+        vo.setItemName(pojo.getName());
         vo.setItemTime(pojo.getItemTime());
-        vo.setAmount(pojo.getAmount());
+        vo.setItemAmount(pojo.getAmount());
         vo.setCreatedTime(pojo.getCreatedTime());
         vo.setUpdateTime(pojo.getUpdateTime());
 

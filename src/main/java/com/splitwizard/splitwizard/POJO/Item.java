@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.sql.Timestamp;
+import java.util.List;
+
 @Entity
 @Data
 @NoArgsConstructor
@@ -28,5 +30,8 @@ public class Item {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "group_id", foreignKey = @ForeignKey(name = "item_fk"), insertable = false, updatable = false)
     Group group;
+
+    @OneToMany(targetEntity = Item.class)
+    List<ItemDetail> itemDetails;
 
 }

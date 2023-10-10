@@ -33,8 +33,8 @@ public class ItemDTO {
         ItemDTO dto = new ItemDTO();
 
         dto.setId(null);
-        dto.setName(vo.getName());
-        dto.setAmount(vo.getAmount());
+        dto.setName(vo.getItemName());
+        dto.setAmount(vo.getItemAmount());
         dto.setItemTime(vo.getItemTime());
         dto.setCreatedTime(vo.getCreatedTime());
         dto.setUpdateTime(vo.getUpdateTime());
@@ -57,8 +57,8 @@ public class ItemDTO {
     public ItemVO convertDTOToVO(){
         ItemVO vo = new ItemVO();
 
-        vo.setName(this.name);
-        vo.setAmount(this.amount);
+        vo.setItemName(this.name);
+        vo.setItemAmount(this.amount);
         vo.setItemTime(this.itemTime);
         vo.setCreatedTime(this.createdTime);
         vo.setUpdateTime(this.updateTime);
