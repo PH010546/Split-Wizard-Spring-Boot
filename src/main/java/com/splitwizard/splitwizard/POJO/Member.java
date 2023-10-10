@@ -1,9 +1,6 @@
 package com.splitwizard.splitwizard.POJO;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import lombok.Data;
 import lombok.Getter;
@@ -26,7 +23,9 @@ public class Member {
     private String account;
     private String name;
     private String password;
-    private Timestamp created_time;
-    private Timestamp update_time;
+    @Column(name = "created_time", insertable = false, updatable = false)
+    private Timestamp createdTime;
+    @Column(name = "update_time", insertable = false)
+    private Timestamp updateTime;
 
 }

@@ -3,9 +3,9 @@ package com.splitwizard.splitwizard.service;
 import com.splitwizard.splitwizard.DAO.GroupRepository;
 import com.splitwizard.splitwizard.DTO.GroupDTO;
 import com.splitwizard.splitwizard.DTO.MemberGroupConnDTO;
-import com.splitwizard.splitwizard.Util.Result;
 import com.splitwizard.splitwizard.POJO.Group;
 import com.splitwizard.splitwizard.POJO.Member;
+import com.splitwizard.splitwizard.Util.Result;
 import com.splitwizard.splitwizard.service.intf.GroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,17 +36,7 @@ public class GroupServiceImpl implements GroupService {
 
         try{
 
-
             // TODO: need to validate?
-            // set time
-            group.setCreated_time(new Timestamp(System.currentTimeMillis()));
-            group.setUpdate_time(new Timestamp(System.currentTimeMillis()));
-
-            // set default values
-            group.setArchive(false);
-            group.setRedirect(false);
-            group.setStatus(false);
-
             // save & return DTO
             return R.success(groupDTO.convert(dao.save(group)));
 
@@ -69,7 +59,7 @@ public class GroupServiceImpl implements GroupService {
         Group group = groupOptional.get();
 
         group.setName(name);
-        group.setUpdate_time(new Timestamp(System.currentTimeMillis()));
+        group.setUpdateTime(new Timestamp(System.currentTimeMillis()));
 
         return R.success(groupDTO.convert(dao.save(group)));
     }
@@ -113,6 +103,7 @@ public class GroupServiceImpl implements GroupService {
         try{
             Group group = dao.getReferenceById(groupId);
             group.setRedirect(false);
+            group.setUpdateTime(new Timestamp(System.currentTimeMillis()));
             dao.save(group);
             return R.success(null);
         }catch (Exception e){

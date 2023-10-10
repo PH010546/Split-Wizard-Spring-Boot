@@ -2,15 +2,14 @@ package com.splitwizard.splitwizard.service;
 
 import com.splitwizard.splitwizard.DAO.MemberRepository;
 import com.splitwizard.splitwizard.DTO.MemberDTO;
-import com.splitwizard.splitwizard.Util.Result;
 import com.splitwizard.splitwizard.POJO.Member;
+import com.splitwizard.splitwizard.Util.Result;
 import com.splitwizard.splitwizard.service.intf.MemberService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -77,10 +76,6 @@ public class MemberServiceImpl implements MemberService {
 
             // 加密密碼
             member.setPassword(passwordEncoder.encode(member.getPassword()));
-
-            // 將時間加入
-            member.setCreated_time(new Timestamp(System.currentTimeMillis()));
-            member.setUpdate_time(new Timestamp(System.currentTimeMillis()));
 
             // 儲存進DB
             return R.success(dto.convert(dao.save(member)));

@@ -1,10 +1,7 @@
 package com.splitwizard.splitwizard.POJO;
 
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -23,11 +20,16 @@ public class Group {
     private Integer id;
 
     private String name;
+    // need to check if we still want this column or not.
     private Boolean status;
+    @Column(insertable = false)
     private Boolean redirect;
+    @Column(insertable = false)
     private Boolean archive;
-    private Timestamp created_time;
-    private Timestamp update_time;
+    @Column(name = "created_time", insertable = false, updatable = false)
+    private Timestamp createdTime;
+    @Column(name = "update_time", insertable = false)
+    private Timestamp updateTime;
 
     @ManyToMany
     @JoinTable(
