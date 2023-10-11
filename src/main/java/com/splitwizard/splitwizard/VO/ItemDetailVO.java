@@ -1,8 +1,6 @@
 package com.splitwizard.splitwizard.VO;
 
-import com.splitwizard.splitwizard.DAO.ItemDetailDAO;
 import com.splitwizard.splitwizard.DAO.MemberRepository;
-import com.splitwizard.splitwizard.POJO.Item;
 import com.splitwizard.splitwizard.POJO.ItemDetail;
 import lombok.Getter;
 import lombok.Setter;
