@@ -19,6 +19,7 @@ public class ItemDetail {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private Integer memberId;
+    @Column(name = "item_id")
     private Integer itemId;
     private Long amount;
     private Boolean payer;
@@ -26,4 +27,8 @@ public class ItemDetail {
     private Timestamp createdTime;
     @Column(name = "update_time", insertable = false)
     private Timestamp updateTime;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "item_id", insertable = false, updatable = false)
+    Item item;
 }

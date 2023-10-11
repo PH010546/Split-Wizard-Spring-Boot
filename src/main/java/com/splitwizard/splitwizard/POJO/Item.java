@@ -31,7 +31,7 @@ public class Item {
     @JoinColumn(name = "group_id", foreignKey = @ForeignKey(name = "item_fk"), insertable = false, updatable = false)
     Group group;
 
-    @OneToMany(targetEntity = Item.class)
+    @OneToMany(mappedBy = "item")
     List<ItemDetail> itemDetails;
 
 }

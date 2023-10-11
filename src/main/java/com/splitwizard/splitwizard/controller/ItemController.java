@@ -22,4 +22,8 @@ public class ItemController {
     public Result getItemsInGroup(@PathVariable Integer groupId){
         return service.getItemsInGroup(groupId);
     }
+    @GetMapping("/groups/*/{itemId}")
+    public Result getSingleItem(@PathVariable(name = "itemId") Integer itemId){
+        return service.getSingleItem(itemId);
+    }
 }
