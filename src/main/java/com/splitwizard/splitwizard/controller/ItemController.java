@@ -31,4 +31,9 @@ public class ItemController {
     public Result editItem(@PathVariable(name = "itemId") Integer itemId, @RequestBody ItemVO itemVo){
         return service.editItem(itemVo, itemId);
     }
+    @DeleteMapping("/groups/{groupId}/{itemId}")
+    public Result deleteItem(@PathVariable(name = "groupId") Integer groupId,
+                             @PathVariable(name = "itemId") Integer itemId){
+        return service.deleteItem(groupId, itemId);
+    }
 }

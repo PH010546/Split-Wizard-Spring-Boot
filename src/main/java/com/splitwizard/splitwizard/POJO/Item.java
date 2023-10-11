@@ -31,7 +31,7 @@ public class Item {
     @JoinColumn(name = "group_id", foreignKey = @ForeignKey(name = "item_fk"), insertable = false, updatable = false)
     Group group;
 
-    @OneToMany(mappedBy = "item")
+    @OneToMany(mappedBy = "item", cascade = {CascadeType.REMOVE})
     List<ItemDetail> itemDetails;
 
 }

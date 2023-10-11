@@ -11,6 +11,6 @@ public interface ItemService {
     Result getItemsInGroup(Integer groupId);
     Result getSingleItem(Integer itemId);
     Result editItem(ItemVO itemVO, Integer itemId);
-    Result deleteItem(Integer itemId);
+    Result deleteItem(Integer groupId, Integer itemId);
 
 }

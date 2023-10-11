@@ -10,4 +10,5 @@ import java.util.List;
 public interface MemberGroupConnRepository extends JpaRepository<MemberGroupConn, Integer> {
 
     List<MemberGroupConn> findAllByGroupId(Integer groupId);
+    MemberGroupConn findByGroupIdAndMemberId(Integer groupId, Integer memberId);
 }

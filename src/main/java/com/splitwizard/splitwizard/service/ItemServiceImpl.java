@@ -1,10 +1,10 @@
 package com.splitwizard.splitwizard.service;
 
-import com.splitwizard.splitwizard.DAO.GroupRepository;
-import com.splitwizard.splitwizard.DAO.ItemDAO;
-import com.splitwizard.splitwizard.DAO.MemberRepository;
+import com.splitwizard.splitwizard.DAO.*;
 import com.splitwizard.splitwizard.POJO.Group;
 import com.splitwizard.splitwizard.POJO.Item;
+import com.splitwizard.splitwizard.POJO.ItemDetail;
+import com.splitwizard.splitwizard.POJO.MemberGroupConn;
 import com.splitwizard.splitwizard.Util.Result;
 import com.splitwizard.splitwizard.VO.ItemVO;
 import com.splitwizard.splitwizard.VO.ItemsInGroupResp;
@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 @Service
 public class ItemServiceImpl implements ItemService {
@@ -22,11 +23,16 @@ public class ItemServiceImpl implements ItemService {
     private final GroupRepository groupDAO;
     private final Result R;
     private final MemberRepository memberDAO;
+    private final ItemDetailDAO itemDetailDAO;
+    private final MemberGroupConnRepository memberGroupDAO;
     @Autowired
-    public ItemServiceImpl(ItemDAO itemDAO, GroupRepository groupDAO, MemberRepository memberDAO){
+    public ItemServiceImpl(ItemDAO itemDAO, GroupRepository groupDAO, MemberRepository memberDAO,
+                           ItemDetailDAO itemDetailDAO, MemberGroupConnRepository memberGroupDAO) {
         this.itemDAO = itemDAO;
         this.groupDAO = groupDAO;
         this.memberDAO = memberDAO;
+        this.itemDetailDAO = itemDetailDAO;
+        this.memberGroupDAO = memberGroupDAO;
         this.R = new Result();
     }
 
@@ -101,7 +107,37 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public Result deleteItem(Integer itemId) {
-        return null;
+    public Result deleteItem(Integer groupId ,Integer itemId) {
+
+        try{
+
+            // find all itemDetails
+            List<ItemDetail> details = itemDetailDAO.findAllByItemId(itemId);
+
+            // update net in MemberGroupConn
+            for (ItemDetail detail : details){
+                MemberGroupConn conn = memberGroupDAO.findByGroupIdAndMemberId(groupId, detail.getMemberId());
+
+                // if payer = true, then minus the amount
+                if (detail.getPayer()) {
+                    conn.setNet(conn.getNet() - detail.getAmount());
+
+                    // if payer = false, then plus the amount
+                }else{
+                    conn.setNet(conn.getNet() + detail.getAmount());
+                }
+                // update time
+                conn.setUpdateTime(new Timestamp(System.currentTimeMillis()));
+
+                // save the change in MemberGroupConn
+                memberGroupDAO.save(conn);
+            }
+
+            itemDAO.deleteById(itemId);
+            return R.success(null);
+        }catch (Exception e){
+            e.printStackTrace();
+            return R.fail(e.getMessage());
+        }
     }
 }
