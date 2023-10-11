@@ -13,9 +13,6 @@ import com.splitwizard.splitwizard.service.intf.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Service
 public class ItemServiceImpl implements ItemService {
 
@@ -52,21 +49,14 @@ public class ItemServiceImpl implements ItemService {
             // TODO: need to modify. (ItemVO.convertList())
             Group group = groupDAO.getReferenceById(groupId);
 
-            ItemsInGroupResp resp = new ItemsInGroupResp();
-            ItemVO itemVO = new ItemVO();
-            List<ItemVO> voList = new ArrayList<>();
-
-            List<Item> items = group.getItems();
-
-            for (Item i : items){
-                voList.add(itemVO.convertPOJOToVO(i));
-            }
-
-            resp.setId(group.getId());
-            resp.setName(group.getName());
-            resp.setItems(voList);
-
-            return R.success(resp);
+            return R.success(new ItemsInGroupResp(
+                    group.getId(),
+                    group.getName(),
+                    group.getRedirect(),
+                    group.getArchive(),
+                    group.getItems(),
+                    memberDAO
+                    ));
 
         }catch (Exception e){
             e.printStackTrace();
