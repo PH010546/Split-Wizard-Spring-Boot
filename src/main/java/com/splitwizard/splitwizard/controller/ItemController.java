@@ -26,4 +26,9 @@ public class ItemController {
     public Result getSingleItem(@PathVariable(name = "itemId") Integer itemId){
         return service.getSingleItem(itemId);
     }
+
+    @PutMapping("/groups/*/{itemId}")
+    public Result editItem(@PathVariable(name = "itemId") Integer itemId, @RequestBody ItemVO itemVo){
+        return service.editItem(itemVo, itemId);
+    }
 }

@@ -13,6 +13,8 @@ import com.splitwizard.splitwizard.service.intf.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
+
 @Service
 public class ItemServiceImpl implements ItemService {
 
@@ -79,8 +81,23 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public Result editItem(ItemVO itemVO) {
-        return null;
+    public Result editItem(ItemVO itemVO, Integer itemId) {
+
+        try{
+            Item newItem = itemDAO.getReferenceById(itemId);
+
+            newItem.setName(itemVO.getItemName());
+            newItem.setItemTime(itemVO.getItemTime());
+            newItem.setAmount(itemVO.getItemAmount());
+            newItem.setUpdateTime(new Timestamp(System.currentTimeMillis()));
+
+            itemDAO.save(newItem);
+
+            return R.success(null);
+        }catch (Exception e){
+            e.printStackTrace();
+            return R.fail(e.getMessage());
+        }
     }
 
     @Override
