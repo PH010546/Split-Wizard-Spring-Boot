@@ -10,7 +10,8 @@ public enum NotificationType {
     SYSTEM(101, "System", "更新囉寶貝"),
     INVITATION(201, "Invitation", " 已邀請您至 "),
     ITEM_ADD(301, "Item", " 中有新增紀錄"),
-    ITEM_UPDATE(302, "Item", " 中有更新紀錄");
+    ITEM_UPDATE(302, "Item", " 中有更新紀錄"),
+    ITEM_DELETE(303, "Item", " 中有紀錄被刪除");
 
     private final Integer code;
     private final String type;

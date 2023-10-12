@@ -47,7 +47,6 @@ public class NotificationServiceImpl implements NotificationService {
         try{
 
             notificationVO.setSenderId((Integer) session.getAttribute("currentUser"));
-            int count = 0;
 
             for (Integer i : notificationVO.getReceiverIds()){
 
@@ -56,14 +55,9 @@ public class NotificationServiceImpl implements NotificationService {
 
                 notificationVO.setReceiverId(i);
                 dao.save(notificationVO.convertVOToDTO(groupDAO, memberDAO).convertDTOToPOJO(groupDAO, memberDAO));
-                count++;
             }
 
-//            if (Objects.equals(notificationVO.getReceiverId(), session.getAttribute("currentUser"))) throw new Exception("sender and receiver cannot be the same member!");
-
-//            Notification savedPOJO = dao.save(notificationVO.convertVOToDTO(groupDAO, memberDAO).convertDTOToPOJO(groupDAO, memberDAO));
-
-            return R.success(count);
+            return R.success(null);
         }catch (Exception e){
             e.printStackTrace();
             return R.fail(e.getMessage());
@@ -90,6 +84,7 @@ public class NotificationServiceImpl implements NotificationService {
                     // TODO: should show who edited the item.
                     case ITEM_ADD -> d.setText("於 " + d.getGroup().getName() + ITEM_ADD.getText());
                     case ITEM_UPDATE -> d.setText("於 " + d.getGroup().getName() + ITEM_UPDATE.getText());
+                    case ITEM_DELETE -> d.setText("於" + d.getGroup().getName() + ITEM_DELETE.getText());
                     default -> {}
                 }
             }
