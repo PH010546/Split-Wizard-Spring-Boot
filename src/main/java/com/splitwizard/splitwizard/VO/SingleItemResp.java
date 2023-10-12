@@ -11,8 +11,8 @@ import java.util.List;
 @Getter @Setter
 public class SingleItemResp {
 
-    private String name;
-    private String time;
+    private String itemName;
+    private String itemTime;
     private Integer amount;
     private List<ItemDetailVO> details;
     private String groupName;
@@ -27,9 +27,9 @@ public class SingleItemResp {
         SingleItemResp resp = new SingleItemResp();
         Group group = groupDAO.getReferenceById(groupId);
 
-        resp.setName(item.getName());
+        resp.setItemName(item.getName());
         resp.setAmount(item.getAmount());
-        resp.setTime(item.getItemTime());
+        resp.setItemTime(item.getItemTime());
         resp.setDetails(itemDetailVO.convertPOJOListToVOList(item.getItemDetails(), memberDAO));
         resp.setGroupName(group.getName());
         resp.setGroupArchive(group.getArchive());
