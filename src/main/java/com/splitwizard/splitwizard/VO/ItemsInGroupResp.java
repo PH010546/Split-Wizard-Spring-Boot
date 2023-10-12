@@ -64,14 +64,15 @@ public class ItemsInGroupResp {
             this.details = convertDetailPOJOListToRespList(detailsPOJO, memberDAO);
         }
 
-        private List<ItemsInGroupRespItemDetail> convertDetailPOJOListToRespList(List<ItemDetail> details,
+        private List<ItemsInGroupRespItemDetail> convertDetailPOJOListToRespList(List<ItemDetail> detailsPOJO,
                                                                                  MemberRepository memberDAO){
 
             List<ItemsInGroupRespItemDetail> respItemDetails = new ArrayList<>();
             ItemsInGroupRespItemDetail respItemDetail = new ItemsInGroupRespItemDetail();
 
-            for (ItemDetail detail : details){
-                respItemDetails.add(respItemDetail.convertDetailPOJOToResp(detail, memberDAO));
+            for (ItemDetail detail : detailsPOJO){
+                respItemDetail = respItemDetail.convertDetailPOJOToResp(detail, memberDAO);
+                if (respItemDetail.getPayer()) respItemDetails.add(respItemDetail);
             }
 
             return respItemDetails;
@@ -97,6 +98,7 @@ public class ItemsInGroupResp {
 
         private Integer id;
         private Boolean payer;
+        private Long amount;
         private MemberDTO member;
 
         private ItemsInGroupRespItemDetail convertDetailPOJOToResp(ItemDetail detail, MemberRepository memberDAO){
@@ -106,6 +108,7 @@ public class ItemsInGroupResp {
 
             resp.setId(detail.getId());
             resp.setPayer(detail.getPayer());
+            resp.setAmount(detail.getAmount());
             resp.setMember(dto.convert(memberDAO.getReferenceById(detail.getMemberId())));
 
             return resp;
