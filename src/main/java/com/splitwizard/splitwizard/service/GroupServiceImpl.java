@@ -3,10 +3,10 @@ package com.splitwizard.splitwizard.service;
 import com.splitwizard.splitwizard.DAO.GroupRepository;
 import com.splitwizard.splitwizard.DTO.GroupDTO;
 import com.splitwizard.splitwizard.DTO.MemberDTO;
-import com.splitwizard.splitwizard.DTO.MemberGroupConnDTO;
 import com.splitwizard.splitwizard.POJO.Group;
 import com.splitwizard.splitwizard.POJO.Member;
 import com.splitwizard.splitwizard.Util.Result;
+import com.splitwizard.splitwizard.VO.GroupWithMembersResp;
 import com.splitwizard.splitwizard.service.intf.GroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,13 +20,13 @@ public class GroupServiceImpl implements GroupService {
     private final GroupRepository dao;
     private final Result R;
     private final GroupDTO groupDTO;
-    private final MemberGroupConnDTO memberGroupConnDTO;
+    private final GroupWithMembersResp resp;
     @Autowired
     public GroupServiceImpl(GroupRepository dao){
         this.dao = dao;
         this.R = new Result();
         this.groupDTO = new GroupDTO();
-        this.memberGroupConnDTO = new MemberGroupConnDTO();
+        this.resp = new GroupWithMembersResp();
     }
 
     @Override
@@ -88,7 +88,7 @@ public class GroupServiceImpl implements GroupService {
                     }
                 }
             }
-            return R.success(memberGroupConnDTO.convertList(resultList));
+            return R.success(resp.convertList(resultList));
         }catch (Exception e){
             e.printStackTrace();
             return R.fail(e.getMessage());
