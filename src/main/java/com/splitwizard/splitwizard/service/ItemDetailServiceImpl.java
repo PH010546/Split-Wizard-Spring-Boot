@@ -29,6 +29,7 @@ public class ItemDetailServiceImpl implements ItemDetailService {
         this.R = new Result();
     }
     @Override
+    @Transactional
     public Result addItemDetails(Integer groupId, Integer itemId, ItemDetailReq req) {
 
         try{
