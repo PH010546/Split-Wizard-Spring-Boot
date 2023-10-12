@@ -1,10 +1,11 @@
 package com.splitwizard.splitwizard.DTO;
 
-import com.splitwizard.splitwizard.POJO.Group;
+import com.splitwizard.splitwizard.POJO.MemberGroupConn;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,37 +13,33 @@ import java.util.List;
 @NoArgsConstructor
 public class MemberGroupConnDTO {
 
-    // id = groupId, name = groupName
-
     private Integer id;
-    private String name;
-    private List<MemberDTO> groupMembers;
+    private Integer groupId;
+    private Integer memberId;
+    private Long net;
+    private Timestamp updateTime;
 
-    public MemberGroupConnDTO(Integer groupId, String groupName, List<MemberDTO> groupMembers){
-        this.id = groupId;
-        this.name = groupName;
-        this.groupMembers = groupMembers;
+    public MemberGroupConnDTO convertPOJOToDTO(MemberGroupConn conn){
+        MemberGroupConnDTO dto = new MemberGroupConnDTO();
+
+        dto.setId(conn.getId());
+        dto.setGroupId(conn.getGroupId());
+        dto.setMemberId(conn.getMemberId());
+        dto.setNet(conn.getNet());
+        dto.setUpdateTime(conn.getUpdateTime());
+
+        return dto;
     }
 
-    public MemberGroupConnDTO convert(Group group){
-
-        MemberDTO memberDTO= new MemberDTO();
-        return new MemberGroupConnDTO(
-                group.getId(),
-                group.getName(),
-                memberDTO.convertList(group.getMembers().stream().toList()));
-    }
-
-    public List<MemberGroupConnDTO> convertList(List<Group> groups){
+    public List<MemberGroupConnDTO> convertPOJOListToDTOList(List<MemberGroupConn> connList){
 
         List<MemberGroupConnDTO> dtoList = new ArrayList<>();
 
-        for (Group g : groups){
-            dtoList.add(convert(g));
+        for (MemberGroupConn pojo : connList){
+            dtoList.add(convertPOJOToDTO(pojo));
         }
 
         return dtoList;
-
     }
 
 }
