@@ -99,10 +99,10 @@ public class ItemDetailServiceImpl implements ItemDetailService {
         try{
             itemDetailDAO.deleteItemDetailsByItemId(itemId);
             addItemDetails(groupId, itemId, req);
+            return R.success(null);
         }catch (Exception e){
             e.printStackTrace();
             return R.fail(e.getMessage());
         }
-        return null;
     }
 }
