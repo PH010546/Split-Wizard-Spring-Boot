@@ -2,6 +2,7 @@ package com.splitwizard.splitwizard.VO;
 
 import com.splitwizard.splitwizard.DAO.GroupRepository;
 import com.splitwizard.splitwizard.DAO.MemberRepository;
+import com.splitwizard.splitwizard.DTO.MemberDTO;
 import com.splitwizard.splitwizard.POJO.Group;
 import com.splitwizard.splitwizard.POJO.Item;
 import lombok.Getter;
@@ -17,6 +18,7 @@ public class SingleItemResp {
     private List<ItemDetailVO> details;
     private String groupName;
     private Boolean groupArchive;
+    private List<MemberDTO> groupMembers;
 
 
 
@@ -27,12 +29,16 @@ public class SingleItemResp {
         SingleItemResp resp = new SingleItemResp();
         Group group = groupDAO.getReferenceById(groupId);
 
+        MemberDTO memberDTO = new MemberDTO();
+
         resp.setItemName(item.getName());
         resp.setAmount(item.getAmount());
         resp.setItemTime(item.getItemTime());
         resp.setDetails(itemDetailVO.convertPOJOListToVOList(item.getItemDetails(), memberDAO));
         resp.setGroupName(group.getName());
         resp.setGroupArchive(group.getArchive());
+        // TODO: members should be Set or List? or can just let the convert method accept Collection type?
+        resp.setGroupMembers(memberDTO.convertList(group.getMembers().stream().toList()));
 
         return resp;
 
