@@ -1,6 +1,8 @@
 package com.splitwizard.splitwizard.VO;
 
+import com.splitwizard.splitwizard.DAO.GroupRepository;
 import com.splitwizard.splitwizard.DAO.MemberRepository;
+import com.splitwizard.splitwizard.POJO.Group;
 import com.splitwizard.splitwizard.POJO.Item;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,19 +15,24 @@ public class SingleItemResp {
     private String time;
     private Integer amount;
     private List<ItemDetailVO> details;
+    private String groupName;
+    private Boolean groupArchive;
 
 
 
-    public SingleItemResp convertItemToResp(Item item, MemberRepository memberDAO){
+    public SingleItemResp convertItemToResp(Item item, Integer groupId,
+                                            MemberRepository memberDAO, GroupRepository groupDAO){
 
         ItemDetailVO itemDetailVO = new ItemDetailVO();
-
         SingleItemResp resp = new SingleItemResp();
+        Group group = groupDAO.getReferenceById(groupId);
 
         resp.setName(item.getName());
         resp.setAmount(item.getAmount());
         resp.setTime(item.getItemTime());
         resp.setDetails(itemDetailVO.convertPOJOListToVOList(item.getItemDetails(), memberDAO));
+        resp.setGroupName(group.getName());
+        resp.setGroupArchive(group.getArchive());
 
         return resp;
 

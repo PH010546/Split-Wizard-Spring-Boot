@@ -9,7 +9,7 @@ public interface ItemService {
 
     Result addItem(ItemVO itemVO, Integer groupId);
     Result getItemsInGroup(Integer groupId);
-    Result getSingleItem(Integer itemId);
+    Result getSingleItem(Integer groupId, Integer itemId);
     Result editItem(ItemVO itemVO, Integer itemId);
     Result deleteItem(Integer groupId, Integer itemId);
 

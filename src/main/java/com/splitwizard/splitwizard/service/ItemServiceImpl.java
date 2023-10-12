@@ -73,13 +73,13 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public Result getSingleItem(Integer itemId) {
+    public Result getSingleItem(Integer groupId, Integer itemId) {
 
         try {
 
             SingleItemResp resp = new SingleItemResp();
 
-            return R.success(resp.convertItemToResp(itemDAO.getReferenceById(itemId), memberDAO));
+            return R.success(resp.convertItemToResp(itemDAO.getReferenceById(itemId),groupId , memberDAO, groupDAO));
         } catch (Exception e) {
             e.printStackTrace();
             return R.fail(e.getMessage());
