@@ -27,9 +27,9 @@ public class SingleItemResp {
 
         ItemDetailVO itemDetailVO = new ItemDetailVO();
         SingleItemResp resp = new SingleItemResp();
-        Group group = groupDAO.getReferenceById(groupId);
-
         MemberDTO memberDTO = new MemberDTO();
+
+        Group group = groupDAO.getReferenceById(groupId);
 
         resp.setItemName(item.getName());
         resp.setAmount(item.getAmount());
