@@ -18,11 +18,13 @@ public class ResultServiceImpl implements ResultService {
     private final MemberGroupConnRepository connDAO;
     private final Result R;
     private final ResultDAO resultDAO;
+    private final ResultDTO DTO;
     @Autowired
     public ResultServiceImpl(MemberGroupConnRepository connDAO, ResultDAO resultDAO){
         this.R = new Result();
         this.resultDAO = resultDAO;
         this.connDAO = connDAO;
+        this.DTO = new ResultDTO();
     }
     @Override
     public Result getResult() {
@@ -59,13 +61,13 @@ public class ResultServiceImpl implements ResultService {
             long payerNet = payers.get(payerPointer).getNet();
             long owerNet = owers.get(owerPointer).getNet();
 
-            ResultDTO resultDTO = new ResultDTO();
             List<ResultDTO> dtoList = new ArrayList<>();
 
             // compare the first two
             while(true){
                 int payerId = payers.get(payerPointer).getMemberId();
                 int owerId = owers.get(owerPointer).getMemberId();
+                ResultDTO resultDTO = new ResultDTO();
 
                 // if the payer's net is more than ower's, then payer's net minus ower's,
                 // and use the same payer to compare the next ower.
@@ -73,23 +75,20 @@ public class ResultServiceImpl implements ResultService {
                     owerPointer++;
                     if (owerPointer > owers.size()-1) break;
 
-                    payerNet = payerNet - owerNet;
-                    owerNet = owers.get(owerPointer).getNet();
-
                     resultDTO.setPayerId(payerId);
                     resultDTO.setOwerId(owerId);
                     resultDTO.setAmount(owerNet);
                     resultDTO.setGroupId(groupId);
 
                     dtoList.add(resultDTO);
+
+                    payerNet = payerNet - owerNet;
+                    owerNet = owers.get(owerPointer).getNet();
                     // if the payer's net is less than ower's, then ower's net minus payer's,
                     // and use the next payer to compare the same ower.
                 }else if (owerNet > payerNet){
                     payerPointer++;
                     if (payerPointer >= payers.size()-1) break;
-
-                    owerNet = owerNet - payerNet;
-                    payerNet = payers.get(payerPointer).getNet();
 
                     resultDTO.setPayerId(payerId);
                     resultDTO.setOwerId(owerId);
@@ -97,6 +96,9 @@ public class ResultServiceImpl implements ResultService {
                     resultDTO.setGroupId(groupId);
 
                     dtoList.add(resultDTO);
+
+                    owerNet = owerNet - payerNet;
+                    payerNet = payers.get(payerPointer).getNet();
                 }else{
 
                     resultDTO.setPayerId(payerId);
@@ -108,12 +110,12 @@ public class ResultServiceImpl implements ResultService {
 
                     payerPointer++;
                     owerPointer++;
-                    if (payerPointer >= payers.size()-1) break;
+                    if (payerPointer > payers.size()-1) break;
                     if (owerPointer > owers.size()-1) break;
                 }
             }
 
-            resultDAO.saveAll(resultDTO.convertDTOListToPOJOList(dtoList));
+            resultDAO.saveAll(DTO.convertDTOListToPOJOList(dtoList));
             return R.success(null);
         }catch (Exception e){
             e.printStackTrace();

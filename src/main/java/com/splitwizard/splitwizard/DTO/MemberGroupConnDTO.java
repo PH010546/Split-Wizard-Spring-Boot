@@ -4,6 +4,7 @@ import com.splitwizard.splitwizard.POJO.MemberGroupConn;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.jetbrains.annotations.NotNull;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -11,7 +12,7 @@ import java.util.List;
 
 @Getter @Setter
 @NoArgsConstructor
-public class MemberGroupConnDTO {
+public class MemberGroupConnDTO implements Comparable<MemberGroupConnDTO>{
 
     private Integer id;
     private Integer groupId;
@@ -42,4 +43,8 @@ public class MemberGroupConnDTO {
         return dtoList;
     }
 
+    @Override
+    public int compareTo(@NotNull MemberGroupConnDTO other) {
+        return (int) (this.getNet() - other.getNet());
+    }
 }
