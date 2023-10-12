@@ -10,6 +10,7 @@ import com.splitwizard.splitwizard.VO.ItemVO;
 import com.splitwizard.splitwizard.VO.ItemsInGroupResp;
 import com.splitwizard.splitwizard.VO.SingleItemResp;
 import com.splitwizard.splitwizard.service.intf.ItemService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -107,6 +108,7 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
+    @Transactional
     public Result deleteItem(Integer groupId ,Integer itemId) {
 
         try{
