@@ -8,6 +8,7 @@ import com.splitwizard.splitwizard.Util.Result;
 import com.splitwizard.splitwizard.VO.ItemDetailReq;
 import com.splitwizard.splitwizard.VO.ItemDetailVO;
 import com.splitwizard.splitwizard.service.intf.ItemDetailService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -91,7 +92,16 @@ public class ItemDetailServiceImpl implements ItemDetailService {
     }
 
     @Override
-    public Result editItemDetails(Integer itemId, ItemDetailReq req) {
+    @Transactional
+    public Result editItemDetails(Integer groupId , Integer itemId, ItemDetailReq req) {
+
+        try{
+            itemDetailDAO.deleteItemDetailsByItemId(itemId);
+            addItemDetails(groupId, itemId, req);
+        }catch (Exception e){
+            e.printStackTrace();
+            return R.fail(e.getMessage());
+        }
         return null;
     }
 }

@@ -7,5 +7,7 @@ import java.util.List;
 
 public interface ItemDetailDAO extends JpaRepository<ItemDetail, Integer> {
 
-    public List<ItemDetail> findAllByItemId(Integer itemId);
+    List<ItemDetail> findAllByItemId(Integer itemId);
+    void deleteItemDetailsByItemId(Integer itemId);
+
 }
