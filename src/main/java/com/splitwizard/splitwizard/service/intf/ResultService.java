@@ -4,7 +4,7 @@ import com.splitwizard.splitwizard.Util.Result;
 
 public interface ResultService {
 
-    Result getResult();
+    Result getResult(Integer groupId);
     Result createSettlement(Integer groupId);
     Result switchResultStatus(Integer resultId);
 

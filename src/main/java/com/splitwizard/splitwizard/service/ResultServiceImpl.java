@@ -6,12 +6,15 @@ import com.splitwizard.splitwizard.DAO.ResultDAO;
 import com.splitwizard.splitwizard.DTO.MemberGroupConnDTO;
 import com.splitwizard.splitwizard.DTO.ResultDTO;
 import com.splitwizard.splitwizard.POJO.Group;
+import com.splitwizard.splitwizard.POJO.Results;
 import com.splitwizard.splitwizard.Util.Result;
+import com.splitwizard.splitwizard.VO.ResultResp;
 import com.splitwizard.splitwizard.service.intf.ResultService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,8 +37,24 @@ public class ResultServiceImpl implements ResultService {
         this.DTO = new ResultDTO();
     }
     @Override
-    public Result getResult() {
-        return null;
+    public Result getResult(Integer groupId) {
+
+        try{
+
+            // get the result list
+            List<Results> resultList = resultDAO.findResultByGroupId(groupId);
+
+            // convert to VO list
+            ResultResp resp = new ResultResp();
+            List<ResultResp> respList = resp.convertPOJOListToRespList(resultList);
+
+            // return the VO list
+            return R.success(respList);
+
+        }catch (Exception e){
+            e.printStackTrace();
+            return R.fail(e.getMessage());
+        }
     }
 
     @Override
@@ -139,6 +158,18 @@ public class ResultServiceImpl implements ResultService {
 
     @Override
     public Result switchResultStatus(Integer resultId) {
-        return null;
+
+        try{
+            Results result = resultDAO.getReferenceById(resultId);
+
+            result.setStatus(!result.getStatus());
+            result.setUpdateTime(new Timestamp(System.currentTimeMillis()));
+            resultDAO.save(result);
+
+            return R.success(null);
+        }catch (Exception e){
+            e.printStackTrace();
+            return R.fail(e.getMessage());
+        }
     }
 }
