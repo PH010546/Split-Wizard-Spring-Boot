@@ -1,6 +1,6 @@
 package com.splitwizard.splitwizard.DTO;
 
-import com.splitwizard.splitwizard.POJO.Result;
+import com.splitwizard.splitwizard.POJO.Results;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,9 +19,9 @@ public class ResultDTO {
     private Timestamp createdTime;
     private Timestamp updateTime;
 
-    public List<Result> convertDTOListToPOJOList(List<ResultDTO> dtoList){
+    public List<Results> convertDTOListToPOJOList(List<ResultDTO> dtoList){
 
-        List<Result> resultList = new ArrayList<>();
+        List<Results> resultList = new ArrayList<>();
 
         for (ResultDTO dto : dtoList){
             resultList.add(dto.convertDTOToPOJO());
@@ -30,9 +30,9 @@ public class ResultDTO {
         return resultList;
     }
 
-    public Result convertDTOToPOJO(){
+    public Results convertDTOToPOJO(){
 
-        Result pojo = new Result();
+        Results pojo = new Results();
 
         pojo.setAmount(this.amount);
         pojo.setStatus(this.status);

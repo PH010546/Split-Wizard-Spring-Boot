@@ -12,7 +12,8 @@ import java.sql.Timestamp;
 @Data
 @NoArgsConstructor
 @Getter @Setter
-public class Result {
+@Table(name = "Result")
+public class Results {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,5 +31,13 @@ public class Result {
     private Timestamp createdTime;
     @Column(name = "update_time", insertable = false)
     private Timestamp updateTime;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ower_id", insertable = false, updatable = false)
+    Member ower;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "payer_id", insertable = false, updatable = false)
+    Member payer;
 
 }
