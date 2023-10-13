@@ -10,5 +10,6 @@ public interface NotificationService {
     Result addNotifications(NotificationVO notificationVo);
     Result getNotificationsWithLimit(Integer currentUserId);
     Result getAllNotifications(Integer currentUserId);
+    Result readNotification(Integer notificationId);
 
 }

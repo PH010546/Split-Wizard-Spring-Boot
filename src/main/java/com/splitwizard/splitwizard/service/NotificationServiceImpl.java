@@ -112,4 +112,23 @@ public class NotificationServiceImpl implements NotificationService {
             return R.fail(e.getMessage());
         }
     }
+
+    @Override
+    public Result readNotification(Integer notificationId) {
+
+        try{
+
+            Notification notification = dao.getReferenceById(notificationId);
+
+            notification.setRead(true);
+
+            dao.save(notification);
+
+            return R.success(null);
+
+        }catch (Exception e){
+            e.printStackTrace();
+            return R.fail(e.getMessage());
+        }
+    }
 }

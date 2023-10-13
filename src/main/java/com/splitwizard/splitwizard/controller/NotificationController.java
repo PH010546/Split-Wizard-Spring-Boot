@@ -27,5 +27,9 @@ public class NotificationController {
     public Result getNotificationsWithLimit(HttpSession session){
         return service.getNotificationsWithLimit((Integer) session.getAttribute("currentUser"));
     }
+    @PostMapping("/readNotification")
+    public Result readNotification(@RequestBody NotificationVO notificationVO){
+        return service.readNotification(notificationVO.getId());
+    }
 
 }
