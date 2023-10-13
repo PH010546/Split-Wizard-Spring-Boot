@@ -1,11 +1,14 @@
 package com.splitwizard.splitwizard.service;
 
+import com.splitwizard.splitwizard.DAO.GroupRepository;
 import com.splitwizard.splitwizard.DAO.MemberGroupConnRepository;
 import com.splitwizard.splitwizard.DAO.ResultDAO;
 import com.splitwizard.splitwizard.DTO.MemberGroupConnDTO;
 import com.splitwizard.splitwizard.DTO.ResultDTO;
+import com.splitwizard.splitwizard.POJO.Group;
 import com.splitwizard.splitwizard.Util.Result;
 import com.splitwizard.splitwizard.service.intf.ResultService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,11 +22,15 @@ public class ResultServiceImpl implements ResultService {
     private final Result R;
     private final ResultDAO resultDAO;
     private final ResultDTO DTO;
+    private final GroupRepository groupDAO;
     @Autowired
-    public ResultServiceImpl(MemberGroupConnRepository connDAO, ResultDAO resultDAO){
+    public ResultServiceImpl(MemberGroupConnRepository connDAO,
+                             ResultDAO resultDAO,
+                             GroupRepository groupDAO){
         this.R = new Result();
         this.resultDAO = resultDAO;
         this.connDAO = connDAO;
+        this.groupDAO = groupDAO;
         this.DTO = new ResultDTO();
     }
     @Override
@@ -32,6 +39,7 @@ public class ResultServiceImpl implements ResultService {
     }
 
     @Override
+    @Transactional
     public Result createSettlement(Integer groupId) {
 
         try{
@@ -116,6 +124,12 @@ public class ResultServiceImpl implements ResultService {
             }
 
             resultDAO.saveAll(DTO.convertDTOListToPOJOList(dtoList));
+
+            // after saving results, change the redirect in group to true.
+            Group group = groupDAO.getReferenceById(groupId);
+            group.setRedirect(true);
+            groupDAO.save(group);
+
             return R.success(null);
         }catch (Exception e){
             e.printStackTrace();
