@@ -31,5 +31,9 @@ public class NotificationController {
     public Result readNotification(@RequestBody NotificationVO notificationVO){
         return service.readNotification(notificationVO.getId());
     }
+    @GetMapping("/getAllNotifications")
+    public Result getAllNotifications(HttpSession session){
+        return service.getAllNotifications((Integer) session.getAttribute("currentUser"));
+    }
 
 }

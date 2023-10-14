@@ -73,21 +73,7 @@ public class NotificationServiceImpl implements NotificationService {
 
             List<NotificationDTO> dtoList = dto.convertList(page.getContent());
 
-            for (NotificationDTO d : dtoList){
-
-                switch (NotificationType.of(d.getType().getCode())) {
-                    case SYSTEM -> d.setText(SYSTEM.getText());
-                    case INVITATION -> d.setText(
-                            d.getSender().getName() + "(" + d.getSender().getAccount() + ")"
-                            + INVITATION.getText()
-                            + d.getGroup().getName());
-                    // TODO: should show who edited the item.
-                    case ITEM_ADD -> d.setText("於 " + d.getGroup().getName() + ITEM_ADD.getText());
-                    case ITEM_UPDATE -> d.setText("於 " + d.getGroup().getName() + ITEM_UPDATE.getText());
-                    case ITEM_DELETE -> d.setText("於" + d.getGroup().getName() + ITEM_DELETE.getText());
-                    default -> {}
-                }
-            }
+            setNotificationMessage(dtoList);
 
             NotificationVO vo = new NotificationVO();
 
@@ -104,8 +90,13 @@ public class NotificationServiceImpl implements NotificationService {
     public Result getAllNotifications(Integer currentUserId) {
 
         try{
+            List<NotificationDTO> dtoList = dto.convertList(dao.findAllByReceiverId(currentUserId));
 
-            return R.success(dao.findAllByReceiverId(currentUserId));
+            setNotificationMessage(dtoList);
+
+            NotificationVO vo = new NotificationVO();
+
+            return R.success(vo.convertListDTOsToVOs(dtoList));
 
         }catch (Exception e){
             e.printStackTrace();
@@ -129,6 +120,24 @@ public class NotificationServiceImpl implements NotificationService {
         }catch (Exception e){
             e.printStackTrace();
             return R.fail(e.getMessage());
+        }
+    }
+
+    private void setNotificationMessage(List<NotificationDTO> dtoList) {
+        for (NotificationDTO d : dtoList){
+
+            switch (NotificationType.of(d.getType().getCode())) {
+                case SYSTEM -> d.setText(SYSTEM.getText());
+                case INVITATION -> d.setText(
+                        d.getSender().getName() + "(" + d.getSender().getAccount() + ")"
+                                + INVITATION.getText()
+                                + d.getGroup().getName());
+                // TODO: should show who edited the item.
+                case ITEM_ADD -> d.setText("於 " + d.getGroup().getName() + ITEM_ADD.getText());
+                case ITEM_UPDATE -> d.setText("於 " + d.getGroup().getName() + ITEM_UPDATE.getText());
+                case ITEM_DELETE -> d.setText("於" + d.getGroup().getName() + ITEM_DELETE.getText());
+                default -> {}
+            }
         }
     }
 }
