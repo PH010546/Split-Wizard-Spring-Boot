@@ -6,6 +6,7 @@ import com.splitwizard.splitwizard.DAO.ResultDAO;
 import com.splitwizard.splitwizard.DTO.MemberGroupConnDTO;
 import com.splitwizard.splitwizard.DTO.ResultDTO;
 import com.splitwizard.splitwizard.POJO.Group;
+import com.splitwizard.splitwizard.POJO.MemberGroupConn;
 import com.splitwizard.splitwizard.POJO.Results;
 import com.splitwizard.splitwizard.Util.Result;
 import com.splitwizard.splitwizard.VO.ResultResp;
@@ -160,10 +161,32 @@ public class ResultServiceImpl implements ResultService {
     }
 
     @Override
-    public Result switchResultStatus(Integer resultId) {
+    @Transactional
+    public Result switchResultStatusAndUpdateNet(Integer resultId) {
 
         try{
             Results result = resultDAO.getReferenceById(resultId);
+
+            // update net in conn
+            MemberGroupConn payerConn = connDAO.findByGroupIdAndMemberId(result.getGroupId(), result.getPayerId());
+            MemberGroupConn owerConn = connDAO.findByGroupIdAndMemberId(result.getGroupId(), result.getOwerId());
+
+            // if status == false means he's paying now,
+            // so need to reduce payer's net and increase ower's
+            if (!result.getStatus()){
+
+                payerConn.setNet(payerConn.getNet() - result.getAmount());
+                owerConn.setNet(owerConn.getNet() + result.getAmount());
+
+            }else{
+
+                payerConn.setNet(payerConn.getNet() + result.getAmount());
+                owerConn.setNet(owerConn.getNet() - result.getAmount());
+
+            }
+            payerConn.setUpdateTime(new Timestamp(System.currentTimeMillis()));
+            owerConn.setUpdateTime(new Timestamp(System.currentTimeMillis()));
+
 
             result.setStatus(!result.getStatus());
             result.setUpdateTime(new Timestamp(System.currentTimeMillis()));

@@ -6,6 +6,6 @@ public interface ResultService {
 
     Result getResult(Integer groupId);
     Result createSettlement(Integer groupId);
-    Result switchResultStatus(Integer resultId);
+    Result switchResultStatusAndUpdateNet(Integer resultId);
 
 }

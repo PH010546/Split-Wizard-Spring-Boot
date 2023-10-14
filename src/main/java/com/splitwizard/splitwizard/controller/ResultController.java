@@ -25,6 +25,6 @@ public class ResultController {
     }
     @PutMapping("/groups/*/switchResultStatus")
     public Result switchResultStatus(@RequestBody ResultDTO resultDTO){
-        return service.switchResultStatus(resultDTO.getId());
+        return service.switchResultStatusAndUpdateNet(resultDTO.getId());
     }
 }
