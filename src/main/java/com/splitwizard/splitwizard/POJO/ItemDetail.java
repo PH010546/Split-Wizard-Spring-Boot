@@ -1,10 +1,7 @@
 package com.splitwizard.splitwizard.POJO;
 
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.sql.Timestamp;
 
@@ -28,7 +25,8 @@ public class ItemDetail {
     @Column(name = "update_time", insertable = false)
     private Timestamp updateTime;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ToString.Exclude
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "item_id", insertable = false, updatable = false)
     Item item;
 }
