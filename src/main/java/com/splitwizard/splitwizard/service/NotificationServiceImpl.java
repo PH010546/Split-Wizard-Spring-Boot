@@ -69,7 +69,7 @@ public class NotificationServiceImpl implements NotificationService {
 
         try{
             Page<Notification> page = dao.findNotificationsByReceiverId(currentUserId,
-                    PageRequest.of(0, 8, Sort.by(Sort.Direction.DESC, "createdTime")));
+                    PageRequest.of(0, 5, Sort.by(Sort.Direction.DESC, "createdTime")));
 
             List<NotificationDTO> dtoList = dto.convertList(page.getContent());
 
