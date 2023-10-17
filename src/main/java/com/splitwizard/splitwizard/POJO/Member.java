@@ -27,5 +27,6 @@ public class Member {
     private Timestamp createdTime;
     @Column(name = "update_time", insertable = false)
     private Timestamp updateTime;
+    private String UID;
 
 }
