@@ -5,7 +5,7 @@ import com.splitwizard.splitwizard.DAO.MemberGroupConnRepository;
 import com.splitwizard.splitwizard.POJO.ItemDetail;
 import com.splitwizard.splitwizard.POJO.MemberGroupConn;
 import com.splitwizard.splitwizard.Util.Result;
-import com.splitwizard.splitwizard.VO.ItemDetailReq;
+import com.splitwizard.splitwizard.VO.req.ItemDetailReq;
 import com.splitwizard.splitwizard.VO.ItemDetailVO;
 import com.splitwizard.splitwizard.service.intf.ItemDetailService;
 import jakarta.transaction.Transactional;

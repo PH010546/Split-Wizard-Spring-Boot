@@ -4,7 +4,7 @@ import com.splitwizard.splitwizard.DAO.MemberRepository;
 import com.splitwizard.splitwizard.DTO.MemberDTO;
 import com.splitwizard.splitwizard.POJO.Member;
 import com.splitwizard.splitwizard.Util.Result;
-import com.splitwizard.splitwizard.VO.AllMemberResp;
+import com.splitwizard.splitwizard.VO.resp.AllMemberResp;
 import com.splitwizard.splitwizard.service.intf.MemberService;
 import jakarta.servlet.http.HttpSession;
 import org.apache.commons.lang3.RandomStringUtils;

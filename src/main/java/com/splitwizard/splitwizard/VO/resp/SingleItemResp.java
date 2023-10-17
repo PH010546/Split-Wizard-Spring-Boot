@@ -1,10 +1,11 @@
-package com.splitwizard.splitwizard.VO;
+package com.splitwizard.splitwizard.VO.resp;
 
 import com.splitwizard.splitwizard.DAO.GroupRepository;
 import com.splitwizard.splitwizard.DAO.MemberRepository;
 import com.splitwizard.splitwizard.DTO.MemberDTO;
 import com.splitwizard.splitwizard.POJO.Group;
 import com.splitwizard.splitwizard.POJO.Item;
+import com.splitwizard.splitwizard.VO.ItemDetailVO;
 import lombok.Getter;
 import lombok.Setter;
 

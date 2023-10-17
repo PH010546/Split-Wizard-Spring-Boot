@@ -1,5 +1,6 @@
-package com.splitwizard.splitwizard.VO;
+package com.splitwizard.splitwizard.VO.req;
 
+import com.splitwizard.splitwizard.VO.ItemDetailVO;
 import lombok.Getter;
 import lombok.Setter;
 

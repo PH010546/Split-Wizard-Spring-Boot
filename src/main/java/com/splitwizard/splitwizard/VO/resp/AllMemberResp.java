@@ -1,4 +1,4 @@
-package com.splitwizard.splitwizard.VO;
+package com.splitwizard.splitwizard.VO.resp;
 
 import com.splitwizard.splitwizard.POJO.Member;
 import lombok.Getter;

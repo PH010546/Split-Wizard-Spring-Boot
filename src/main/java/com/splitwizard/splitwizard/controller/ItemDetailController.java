@@ -1,7 +1,7 @@
 package com.splitwizard.splitwizard.controller;
 
 import com.splitwizard.splitwizard.Util.Result;
-import com.splitwizard.splitwizard.VO.ItemDetailReq;
+import com.splitwizard.splitwizard.VO.req.ItemDetailReq;
 import com.splitwizard.splitwizard.service.ItemDetailServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

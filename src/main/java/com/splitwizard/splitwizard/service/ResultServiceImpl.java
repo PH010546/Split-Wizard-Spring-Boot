@@ -9,7 +9,7 @@ import com.splitwizard.splitwizard.POJO.Group;
 import com.splitwizard.splitwizard.POJO.MemberGroupConn;
 import com.splitwizard.splitwizard.POJO.Results;
 import com.splitwizard.splitwizard.Util.Result;
-import com.splitwizard.splitwizard.VO.ResultResp;
+import com.splitwizard.splitwizard.VO.resp.ResultResp;
 import com.splitwizard.splitwizard.service.intf.ResultService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;

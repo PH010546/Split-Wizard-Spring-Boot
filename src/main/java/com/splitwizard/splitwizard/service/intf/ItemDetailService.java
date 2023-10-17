@@ -1,7 +1,7 @@
 package com.splitwizard.splitwizard.service.intf;
 
 import com.splitwizard.splitwizard.Util.Result;
-import com.splitwizard.splitwizard.VO.ItemDetailReq;
+import com.splitwizard.splitwizard.VO.req.ItemDetailReq;
 
 public interface ItemDetailService {
 

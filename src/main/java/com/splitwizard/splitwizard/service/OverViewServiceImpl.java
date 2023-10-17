@@ -4,7 +4,7 @@ import com.splitwizard.splitwizard.DAO.*;
 import com.splitwizard.splitwizard.POJO.Group;
 import com.splitwizard.splitwizard.POJO.Member;
 import com.splitwizard.splitwizard.Util.Result;
-import com.splitwizard.splitwizard.VO.OverViewResp;
+import com.splitwizard.splitwizard.VO.resp.OverViewResp;
 import com.splitwizard.splitwizard.VO.OverViewVO;
 import com.splitwizard.splitwizard.service.intf.OverViewService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,20 +19,13 @@ public class OverViewServiceImpl implements OverViewService {
 
     private final Result R;
     private final GroupRepository groupDAO;
-    private final MemberRepository memberDAO;
-    private final ItemDAO itemDAO;
-    private final ItemDetailDAO itemDetailDAO;
     private final MemberGroupConnRepository connDAO;
 
     @Autowired
-    OverViewServiceImpl(GroupRepository groupDAO, MemberRepository memberDAO,
-                        ItemDAO itemDAO, ItemDetailDAO itemDetailDAO,
+    OverViewServiceImpl(GroupRepository groupDAO,
                         MemberGroupConnRepository connDAO){
 
         this.groupDAO = groupDAO;
-        this.itemDAO = itemDAO;
-        this.itemDetailDAO = itemDetailDAO;
-        this.memberDAO = memberDAO;
         this.connDAO = connDAO;
         this.R = new Result();
 

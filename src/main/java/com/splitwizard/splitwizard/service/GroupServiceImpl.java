@@ -6,7 +6,7 @@ import com.splitwizard.splitwizard.DTO.MemberDTO;
 import com.splitwizard.splitwizard.POJO.Group;
 import com.splitwizard.splitwizard.POJO.Member;
 import com.splitwizard.splitwizard.Util.Result;
-import com.splitwizard.splitwizard.VO.GroupWithMembersResp;
+import com.splitwizard.splitwizard.VO.resp.GroupWithMembersResp;
 import com.splitwizard.splitwizard.service.intf.GroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
