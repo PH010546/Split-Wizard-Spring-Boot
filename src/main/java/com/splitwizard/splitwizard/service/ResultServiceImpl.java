@@ -86,8 +86,8 @@ public class ResultServiceImpl implements ResultService {
 
             int payerPointer = 0;
             int owerPointer = 0;
-            long payerNet = payers.get(payerPointer).getNet();
-            long owerNet = owers.get(owerPointer).getNet();
+            float payerNet = payers.get(payerPointer).getNet();
+            float owerNet = owers.get(owerPointer).getNet();
 
             List<ResultDTO> dtoList = new ArrayList<>();
 
@@ -146,7 +146,7 @@ public class ResultServiceImpl implements ResultService {
     }
 
     private void addToResultList(Integer groupId,
-                                 long net,
+                                 float net,
                                  List<ResultDTO> dtoList,
                                  int payerId,
                                  int owerId,

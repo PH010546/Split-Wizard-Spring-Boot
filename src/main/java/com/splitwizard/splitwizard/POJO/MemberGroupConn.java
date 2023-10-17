@@ -21,7 +21,8 @@ public class MemberGroupConn {
     private Integer memberId;
     @Column(name = "group_id")
     private Integer groupId;
-    private Long net;
+    @Column(insertable = false)
+    private Float net;
     @Column(name = "update_time")
     private Timestamp updateTime;
 

@@ -17,7 +17,7 @@ public class Item {
     @Column(insertable = false, updatable = false)
     private Integer id;
     private String name;
-    private Integer amount;
+    private Float amount;
     private String itemTime;
     @Column(name = "created_time", insertable = false, updatable = false)
     private Timestamp createdTime;

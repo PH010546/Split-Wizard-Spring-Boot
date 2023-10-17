@@ -8,6 +8,6 @@ public class OverViewVO {
 
     private Integer memberId;
     private String memberName;
-    private Long memberNet;
+    private Float memberNet;
 
 }

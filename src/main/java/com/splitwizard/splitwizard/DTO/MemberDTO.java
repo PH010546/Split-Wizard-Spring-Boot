@@ -4,13 +4,11 @@ import com.splitwizard.splitwizard.DAO.MemberRepository;
 import com.splitwizard.splitwizard.POJO.Member;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Getter @Setter
-@Component
 public class MemberDTO {
 
     private Integer id;

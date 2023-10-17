@@ -24,7 +24,7 @@ public class Results {
     private Integer owerId;
     @Column(name = "payer_id")
     private Integer payerId;
-    private Long amount;
+    private Float amount;
     @Column(insertable = false)
     private Boolean status;
     @Column(name = "created_time", insertable = false, updatable = false)

@@ -15,7 +15,7 @@ public class SingleItemResp {
 
     private String itemName;
     private String itemTime;
-    private Integer amount;
+    private Float amount;
     private List<ItemDetailVO> details;
     private String groupName;
     private Boolean groupArchive;

@@ -13,7 +13,7 @@ public class ItemDetailVO {
 
     private Integer id; // member_id
     private String name; // member_name
-    private Long amount;
+    private Float amount;
     private Boolean payer;
 
     public ItemDetail convertVOToPOJO(){
