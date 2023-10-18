@@ -70,64 +70,64 @@ public class ResultServiceImpl implements ResultService {
 
             // split into two groups: payer (who should receive money) and ower (who should pay)
 
-            List<MemberGroupConnDTO> payers = new ArrayList<>();
-            List<MemberGroupConnDTO> owers = new ArrayList<>();
+            List<MemberGroupConnDTO> takers = new ArrayList<>();
+            List<MemberGroupConnDTO> givers = new ArrayList<>();
 
             for (MemberGroupConnDTO conn : connList){
-                if (conn.getNet() > 0) payers.add(conn);
+                if (conn.getNet() > 0) takers.add(conn);
                 else {
                     conn.setNet(conn.getNet() * (-1));
-                    owers.add(conn);
+                    givers.add(conn);
                 }
             }
             // make their net to absolute value and sort ASC
-            payers.sort(null);
-            owers.sort(null);
+            takers.sort(null);
+            givers.sort(null);
 
-            int payerPointer = 0;
-            int owerPointer = 0;
-            float payerNet = payers.get(payerPointer).getNet();
-            float owerNet = owers.get(owerPointer).getNet();
+            int takerPointer = 0;
+            int giverPointer = 0;
+            float takerNet = takers.get(takerPointer).getNet();
+            float giverNet = givers.get(giverPointer).getNet();
 
             List<ResultDTO> dtoList = new ArrayList<>();
 
             // compare the first two
             while(true){
-                int payerId = payers.get(payerPointer).getMemberId();
-                int owerId = owers.get(owerPointer).getMemberId();
+                int takerId = takers.get(takerPointer).getMemberId();
+                int giverId = givers.get(giverPointer).getMemberId();
                 ResultDTO resultDTO = new ResultDTO();
 
                 // if the payer's net is more than ower's, then payer's net minus ower's,
                 // and use the same payer to compare the next ower.
-                if (payerNet > owerNet){
+                if (takerNet > giverNet){
 
-                    addToResultList(groupId, owerNet, dtoList, payerId, owerId, resultDTO);
+                    addToResultList(groupId, giverNet, dtoList, takerId, giverId, resultDTO);
 
-                    owerPointer++;
-                    if (owerPointer > owers.size()-1) break;
+                    giverPointer++;
+                    if (giverPointer > givers.size()-1) break;
 
-                    payerNet = payerNet - owerNet;
-                    owerNet = owers.get(owerPointer).getNet();
+                    takerNet = takerNet - giverNet;
+                    giverNet = givers.get(giverPointer).getNet();
 
                     // if the payer's net is less than ower's, then ower's net minus payer's,
                     // and use the next payer to compare the same ower.
-                }else if (owerNet > payerNet){
+                }else if (giverNet > takerNet){
 
-                    addToResultList(groupId, payerNet, dtoList, payerId, owerId, resultDTO);
+                    addToResultList(groupId, takerNet, dtoList, takerId, giverId, resultDTO);
 
-                    payerPointer++;
-                    if (payerPointer > payers.size()-1) break;
+                    takerPointer++;
+                    if (takerPointer > takers.size()-1) break;
 
-                    owerNet = owerNet - payerNet;
-                    payerNet = payers.get(payerPointer).getNet();
+                    giverNet = giverNet - takerNet;
+                    takerNet = takers.get(takerPointer).getNet();
                 }else{
 
-                    addToResultList(groupId, payerNet, dtoList, payerId, owerId, resultDTO);
+                    addToResultList(groupId, takerNet, dtoList, takerId, giverId, resultDTO);
 
-                    payerPointer++;
-                    owerPointer++;
-                    if (payerPointer > payers.size()-1) break;
-                    if (owerPointer > owers.size()-1) break;
+                    takerPointer++;
+                    giverPointer++;
+                    if (takerPointer > takers.size()-1) break;
+                    if (giverPointer > givers.size()-1) break;
                 }
             }
 
