@@ -103,7 +103,7 @@ public class MemberServiceImpl implements MemberService {
                 }
             }
 
-            return R.success(dto.convertList(result));
+            return R.success(new AllMemberResp().convertPOJOListToRespList(result));
         }catch (Exception e){
             e.printStackTrace();
             return R.fail(e.getMessage());
