@@ -54,7 +54,7 @@ public class ItemsInGroupResp {
 
         private Integer id;
         private String itemName;
-        private Float itemAmount;
+        private Double itemAmount;
         private String itemTime;
         private Timestamp createdTime;
         private Timestamp updateTime;
@@ -98,7 +98,7 @@ public class ItemsInGroupResp {
 
         private Integer id;
         private Boolean payer;
-        private Float amount;
+        private Double amount;
         private MemberDTO member;
 
         private ItemsInGroupRespItemDetail convertDetailPOJOToResp(ItemDetail detail, MemberRepository memberDAO){

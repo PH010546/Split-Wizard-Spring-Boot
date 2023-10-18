@@ -22,7 +22,7 @@ public class MemberGroupConn {
     @Column(name = "group_id")
     private Integer groupId;
     @Column(insertable = false)
-    private Float net;
+    private Double net;
     @Column(name = "update_time")
     private Timestamp updateTime;
 

@@ -17,7 +17,7 @@ public class MemberGroupConnDTO implements Comparable<MemberGroupConnDTO>{
     private Integer id;
     private Integer groupId;
     private Integer memberId;
-    private Float net;
+    private Double net;
     private Timestamp updateTime;
 
     public MemberGroupConnDTO convertPOJOToDTO(MemberGroupConn conn){

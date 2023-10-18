@@ -24,7 +24,7 @@ public class Results {
     private Integer giverId;
     @Column(name = "taker_id")
     private Integer takerId;
-    private Float amount;
+    private Double amount;
     @Column(insertable = false)
     private Boolean status;
     @Column(name = "created_time", insertable = false, updatable = false)

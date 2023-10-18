@@ -11,7 +11,7 @@ public class ItemDTO {
 
     private Integer id;
     private String name;
-    private Float amount;
+    private Double amount;
     private String itemTime;
     private Timestamp createdTime;
     private Timestamp updateTime;

@@ -16,7 +16,7 @@ public class ResultResp {
     private MemberDTO ower;
     private Integer payerId;
     private MemberDTO payer;
-    private Float amount;
+    private Double amount;
     private Boolean status;
 
     public ResultResp convertPOJOToResp(Results pojo){

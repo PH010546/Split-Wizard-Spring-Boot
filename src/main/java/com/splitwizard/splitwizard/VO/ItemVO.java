@@ -12,7 +12,7 @@ import java.sql.Timestamp;
 public class ItemVO {
     private Integer id;
     private String itemName;
-    private Float itemAmount;
+    private Double itemAmount;
     private String itemTime;
     private Timestamp createdTime;
     private Timestamp updateTime;

@@ -14,7 +14,7 @@ public class ResultDTO {
     private Integer groupId;
     private Integer owerId;
     private Integer payerId;
-    private Float amount;
+    private Double amount;
     private Boolean status;
     private Timestamp createdTime;
     private Timestamp updateTime;
