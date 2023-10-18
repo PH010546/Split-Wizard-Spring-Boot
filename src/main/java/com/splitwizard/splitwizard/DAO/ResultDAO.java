@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface ResultDAO extends JpaRepository<Results, Integer> {
 
-    List<Results> findResultByGroupId(Integer groupId);
+    List<Results> findAllByGroupId(Integer groupId);
 }

@@ -11,7 +11,7 @@ public interface GroupService {
     Result updateGroupName(String name, Integer id);
     Result deleteGroup(Integer id);
     Result findAllCurrentGroupsWithMembers(Integer currentUserId);
-    Result resetRedirect(Integer groupId);
+    Result resetRedirectAndCleanUnpayedResult(Integer groupId);
     Result getMembersInGroup(Integer groupId);
 
 }

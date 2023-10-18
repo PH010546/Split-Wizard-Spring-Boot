@@ -3,6 +3,7 @@ package com.splitwizard.splitwizard.POJO;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -17,7 +18,7 @@ public class Item {
     @Column(insertable = false, updatable = false)
     private Integer id;
     private String name;
-    private Double amount;
+    private BigDecimal amount;
     private String itemTime;
     @Column(name = "created_time", insertable = false, updatable = false)
     private Timestamp createdTime;

@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 @Getter @Setter
@@ -12,7 +13,7 @@ import java.sql.Timestamp;
 public class ItemVO {
     private Integer id;
     private String itemName;
-    private Double itemAmount;
+    private BigDecimal itemAmount;
     private String itemTime;
     private Timestamp createdTime;
     private Timestamp updateTime;

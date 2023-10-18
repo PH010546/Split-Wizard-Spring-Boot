@@ -5,13 +5,14 @@ import com.splitwizard.splitwizard.VO.ItemVO;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 @Getter @Setter
 public class ItemDTO {
 
     private Integer id;
     private String name;
-    private Double amount;
+    private BigDecimal amount;
     private String itemTime;
     private Timestamp createdTime;
     private Timestamp updateTime;

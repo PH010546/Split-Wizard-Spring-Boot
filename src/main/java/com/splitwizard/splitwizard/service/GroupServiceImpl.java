@@ -1,13 +1,16 @@
 package com.splitwizard.splitwizard.service;
 
 import com.splitwizard.splitwizard.DAO.GroupRepository;
+import com.splitwizard.splitwizard.DAO.ResultDAO;
 import com.splitwizard.splitwizard.DTO.GroupDTO;
 import com.splitwizard.splitwizard.DTO.MemberDTO;
 import com.splitwizard.splitwizard.POJO.Group;
 import com.splitwizard.splitwizard.POJO.Member;
+import com.splitwizard.splitwizard.POJO.Results;
 import com.splitwizard.splitwizard.Util.Result;
 import com.splitwizard.splitwizard.VO.resp.GroupWithMembersResp;
 import com.splitwizard.splitwizard.service.intf.GroupService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,12 +24,14 @@ public class GroupServiceImpl implements GroupService {
     private final Result R;
     private final GroupDTO groupDTO;
     private final GroupWithMembersResp resp;
+    private final ResultDAO resultDAO;
     @Autowired
-    public GroupServiceImpl(GroupRepository dao){
+    public GroupServiceImpl(GroupRepository dao, ResultDAO resultDAO){
         this.dao = dao;
         this.R = new Result();
         this.groupDTO = new GroupDTO();
         this.resp = new GroupWithMembersResp();
+        this.resultDAO = resultDAO;
     }
 
     @Override
@@ -96,13 +101,22 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
-    public Result resetRedirect(Integer groupId) {
+    @Transactional
+    public Result resetRedirectAndCleanUnpayedResult(Integer groupId) {
 
         try{
             Group group = dao.getReferenceById(groupId);
             group.setRedirect(false);
             group.setUpdateTime(new Timestamp(System.currentTimeMillis()));
             dao.save(group);
+
+            // clean the unpayed results
+            List<Results> resultList = resultDAO.findAllByGroupId(groupId);
+
+            for (Results result : resultList){
+                if (!result.getStatus()) resultDAO.delete(result);
+            }
+
             return R.success(null);
         }catch (Exception e){
             e.printStackTrace();

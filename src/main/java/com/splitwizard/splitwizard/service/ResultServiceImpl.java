@@ -15,6 +15,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +44,7 @@ public class ResultServiceImpl implements ResultService {
         try{
 
             // get the result list
-            List<Results> resultList = resultDAO.findResultByGroupId(groupId);
+            List<Results> resultList = resultDAO.findAllByGroupId(groupId);
 
             // convert to VO list
             ResultResp resp = new ResultResp();
@@ -74,9 +75,9 @@ public class ResultServiceImpl implements ResultService {
             List<MemberGroupConnDTO> givers = new ArrayList<>();
 
             for (MemberGroupConnDTO conn : connList){
-                if (conn.getNet() > 0) takers.add(conn);
+                if (conn.getNet().compareTo(BigDecimal.ZERO) > 0) takers.add(conn);
                 else {
-                    conn.setNet(conn.getNet() * (-1));
+                    conn.setNet(conn.getNet().abs());
                     givers.add(conn);
                 }
             }
@@ -86,8 +87,8 @@ public class ResultServiceImpl implements ResultService {
 
             int takerPointer = 0;
             int giverPointer = 0;
-            double takerNet = takers.get(takerPointer).getNet();
-            double giverNet = givers.get(giverPointer).getNet();
+            BigDecimal takerNet = takers.get(takerPointer).getNet();
+            BigDecimal giverNet = givers.get(giverPointer).getNet();
 
             List<ResultDTO> dtoList = new ArrayList<>();
 
@@ -99,26 +100,28 @@ public class ResultServiceImpl implements ResultService {
 
                 // if the payer's net is more than ower's, then payer's net minus ower's,
                 // and use the same payer to compare the next ower.
-                if (takerNet > giverNet){
+                // takerNet > giverNet
+                if (takerNet.compareTo(giverNet) > 0){
 
                     addToResultList(groupId, giverNet, dtoList, takerId, giverId, resultDTO);
 
                     giverPointer++;
                     if (giverPointer > givers.size()-1) break;
 
-                    takerNet = takerNet - giverNet;
+                    takerNet = takerNet.subtract(giverNet);
                     giverNet = givers.get(giverPointer).getNet();
 
                     // if the payer's net is less than ower's, then ower's net minus payer's,
                     // and use the next payer to compare the same ower.
-                }else if (giverNet > takerNet){
+                    // takerNet < giverNet
+                }else if (takerNet.compareTo(giverNet) < 0){
 
                     addToResultList(groupId, takerNet, dtoList, takerId, giverId, resultDTO);
 
                     takerPointer++;
                     if (takerPointer > takers.size()-1) break;
 
-                    giverNet = giverNet - takerNet;
+                    giverNet = giverNet.subtract(takerNet);
                     takerNet = takers.get(takerPointer).getNet();
                 }else{
 
@@ -146,7 +149,7 @@ public class ResultServiceImpl implements ResultService {
     }
 
     private void addToResultList(Integer groupId,
-                                 double net,
+                                 BigDecimal net,
                                  List<ResultDTO> dtoList,
                                  int payerId,
                                  int owerId,
@@ -175,13 +178,13 @@ public class ResultServiceImpl implements ResultService {
             // so need to reduce payer's net and increase ower's
             if (!result.getStatus()){
 
-                payerConn.setNet(payerConn.getNet() - result.getAmount());
-                owerConn.setNet(owerConn.getNet() + result.getAmount());
+                payerConn.setNet(payerConn.getNet().subtract(result.getAmount()));
+                owerConn.setNet(owerConn.getNet().add(result.getAmount()));
 
             }else{
 
-                payerConn.setNet(payerConn.getNet() + result.getAmount());
-                owerConn.setNet(owerConn.getNet() - result.getAmount());
+                payerConn.setNet(payerConn.getNet().add(result.getAmount()));
+                owerConn.setNet(owerConn.getNet().subtract(result.getAmount()));
 
             }
             payerConn.setUpdateTime(new Timestamp(System.currentTimeMillis()));
@@ -198,4 +201,8 @@ public class ResultServiceImpl implements ResultService {
             return R.fail(e.getMessage());
         }
     }
+
+//    private BigDecimal round(BigDecimal num){
+//        return Math.round(num*100.0)/100.0;
+//    }
 }

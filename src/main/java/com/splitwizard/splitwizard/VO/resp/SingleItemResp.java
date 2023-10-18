@@ -9,13 +9,14 @@ import com.splitwizard.splitwizard.VO.ItemDetailVO;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.util.List;
 @Getter @Setter
 public class SingleItemResp {
 
     private String itemName;
     private String itemTime;
-    private Double amount;
+    private BigDecimal amount;
     private List<ItemDetailVO> details;
     private String groupName;
     private Boolean groupArchive;

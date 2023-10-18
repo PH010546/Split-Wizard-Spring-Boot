@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 @Entity
@@ -24,7 +25,7 @@ public class Results {
     private Integer giverId;
     @Column(name = "taker_id")
     private Integer takerId;
-    private Double amount;
+    private BigDecimal amount;
     @Column(insertable = false)
     private Boolean status;
     @Column(name = "created_time", insertable = false, updatable = false)

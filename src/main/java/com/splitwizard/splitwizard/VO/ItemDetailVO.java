@@ -5,6 +5,7 @@ import com.splitwizard.splitwizard.POJO.ItemDetail;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +14,7 @@ public class ItemDetailVO {
 
     private Integer id; // member_id
     private String name; // member_name
-    private Double amount;
+    private BigDecimal amount;
     private Boolean payer;
 
     public ItemDetail convertVOToPOJO(){

@@ -4,6 +4,7 @@ import com.splitwizard.splitwizard.POJO.Results;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +15,7 @@ public class ResultDTO {
     private Integer groupId;
     private Integer owerId;
     private Integer payerId;
-    private Double amount;
+    private BigDecimal amount;
     private Boolean status;
     private Timestamp createdTime;
     private Timestamp updateTime;

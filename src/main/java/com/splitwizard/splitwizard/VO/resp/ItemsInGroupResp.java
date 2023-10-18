@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -54,7 +55,7 @@ public class ItemsInGroupResp {
 
         private Integer id;
         private String itemName;
-        private Double itemAmount;
+        private BigDecimal itemAmount;
         private String itemTime;
         private Timestamp createdTime;
         private Timestamp updateTime;
@@ -98,7 +99,7 @@ public class ItemsInGroupResp {
 
         private Integer id;
         private Boolean payer;
-        private Double amount;
+        private BigDecimal amount;
         private MemberDTO member;
 
         private ItemsInGroupRespItemDetail convertDetailPOJOToResp(ItemDetail detail, MemberRepository memberDAO){

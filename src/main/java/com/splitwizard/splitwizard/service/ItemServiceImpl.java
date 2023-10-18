@@ -122,11 +122,11 @@ public class ItemServiceImpl implements ItemService {
 
                 // if payer = true, then minus the amount
                 if (detail.getPayer()) {
-                    conn.setNet(conn.getNet() - detail.getAmount());
+                    conn.setNet(conn.getNet().subtract(detail.getAmount()));
 
                     // if payer = false, then plus the amount
                 }else{
-                    conn.setNet(conn.getNet() + detail.getAmount());
+                    conn.setNet(conn.getNet().add(detail.getAmount()));
                 }
                 // update time
                 conn.setUpdateTime(new Timestamp(System.currentTimeMillis()));
@@ -142,4 +142,8 @@ public class ItemServiceImpl implements ItemService {
             return R.fail(e.getMessage());
         }
     }
+
+//    private BigDecimal round(BigDecimal num){
+//        return Math.round(num*100.0)/100.0;
+//    }
 }

@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.jetbrains.annotations.NotNull;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +18,7 @@ public class MemberGroupConnDTO implements Comparable<MemberGroupConnDTO>{
     private Integer id;
     private Integer groupId;
     private Integer memberId;
-    private Double net;
+    private BigDecimal net;
     private Timestamp updateTime;
 
     public MemberGroupConnDTO convertPOJOToDTO(MemberGroupConn conn){
@@ -45,6 +46,6 @@ public class MemberGroupConnDTO implements Comparable<MemberGroupConnDTO>{
 
     @Override
     public int compareTo(@NotNull MemberGroupConnDTO other) {
-        return (int) (this.getNet() - other.getNet());
+        return (this.getNet().subtract(other.getNet())).intValue();
     }
 }

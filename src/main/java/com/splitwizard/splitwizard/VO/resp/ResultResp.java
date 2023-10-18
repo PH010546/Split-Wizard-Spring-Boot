@@ -5,6 +5,7 @@ import com.splitwizard.splitwizard.POJO.Results;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,11 +13,11 @@ import java.util.List;
 public class ResultResp {
 
     private Integer id;
-    private Integer owerId;
-    private MemberDTO ower;
-    private Integer payerId;
-    private MemberDTO payer;
-    private Double amount;
+    private Integer giverId;
+    private MemberDTO giver;
+    private Integer takerId;
+    private MemberDTO taker;
+    private BigDecimal amount;
     private Boolean status;
 
     public ResultResp convertPOJOToResp(Results pojo){
@@ -26,10 +27,10 @@ public class ResultResp {
         resp.setId(pojo.getId());
         resp.setStatus(pojo.getStatus());
         resp.setAmount(pojo.getAmount());
-        resp.setOwerId(pojo.getGiverId());
-        resp.setPayerId(pojo.getTakerId());
-        resp.setOwer(memberDTO.convert(pojo.getGiver()));
-        resp.setPayer(memberDTO.convert(pojo.getTaker()));
+        resp.setGiverId(pojo.getGiverId());
+        resp.setTakerId(pojo.getTakerId());
+        resp.setGiver(memberDTO.convert(pojo.getGiver()));
+        resp.setTaker(memberDTO.convert(pojo.getTaker()));
 
         return resp;
     }

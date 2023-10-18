@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 @Entity
@@ -22,7 +23,7 @@ public class MemberGroupConn {
     @Column(name = "group_id")
     private Integer groupId;
     @Column(insertable = false)
-    private Double net;
+    private BigDecimal net;
     @Column(name = "update_time")
     private Timestamp updateTime;
 

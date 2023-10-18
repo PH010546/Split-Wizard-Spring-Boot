@@ -39,7 +39,7 @@ public class GroupController {
     }
     @PutMapping("/groups/{groupId}/resetRedirect")
     public Result resetRedirect(@PathVariable(name = "groupId")Integer groupId){
-        return service.resetRedirect(groupId);
+        return service.resetRedirectAndCleanUnpayedResult(groupId);
     }
     @GetMapping("/groups/{groupId}/members")
     public Result getMembersInGroup(@PathVariable(name = "groupId") Integer groupId){

@@ -5,8 +5,8 @@ import com.splitwizard.splitwizard.DAO.MemberGroupConnRepository;
 import com.splitwizard.splitwizard.POJO.ItemDetail;
 import com.splitwizard.splitwizard.POJO.MemberGroupConn;
 import com.splitwizard.splitwizard.Util.Result;
-import com.splitwizard.splitwizard.VO.req.ItemDetailReq;
 import com.splitwizard.splitwizard.VO.ItemDetailVO;
+import com.splitwizard.splitwizard.VO.req.ItemDetailReq;
 import com.splitwizard.splitwizard.service.intf.ItemDetailService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,7 +57,7 @@ public class ItemDetailServiceImpl implements ItemDetailService {
                 for (MemberGroupConn c : connList){
                     if (Objects.equals(c.getMemberId(), vo.getId())){
                         // for payers, the amount is positive.
-                        c.setNet(c.getNet() + vo.getAmount());
+                        c.setNet(c.getNet().add(vo.getAmount())); // c.getNet() + vo.getAmount
                         c.setUpdateTime(new Timestamp(System.currentTimeMillis()));
                         connresults.add(c);
                     }
@@ -75,7 +75,7 @@ public class ItemDetailServiceImpl implements ItemDetailService {
                 for (MemberGroupConn c : connList){
                     if (Objects.equals(c.getMemberId(), vo.getId())){
                         // for owers, the amount is negative.
-                        c.setNet(c.getNet() - vo.getAmount());
+                        c.setNet(c.getNet().subtract(vo.getAmount()));
                         c.setUpdateTime(new Timestamp(System.currentTimeMillis()));
                         connresults.add(c);
                     }
@@ -105,4 +105,8 @@ public class ItemDetailServiceImpl implements ItemDetailService {
             return R.fail(e.getMessage());
         }
     }
+
+//    private BigDecimal round(BigDecimal num){
+//        return Math.round(num*100.0)/100.0;
+//    }
 }
