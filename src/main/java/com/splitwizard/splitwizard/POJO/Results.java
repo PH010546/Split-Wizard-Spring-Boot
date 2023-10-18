@@ -20,10 +20,10 @@ public class Results {
     private Integer id;
     @Column(name = "group_id")
     private Integer groupId;
-    @Column(name = "ower_id")
-    private Integer owerId;
-    @Column(name = "payer_id")
-    private Integer payerId;
+    @Column(name = "giver_id")
+    private Integer giverId;
+    @Column(name = "taker_id")
+    private Integer takerId;
     private Float amount;
     @Column(insertable = false)
     private Boolean status;
@@ -33,11 +33,11 @@ public class Results {
     private Timestamp updateTime;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ower_id", insertable = false, updatable = false)
-    Member ower;
+    @JoinColumn(name = "giver_id", insertable = false, updatable = false)
+    Member giver;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "payer_id", insertable = false, updatable = false)
-    Member payer;
+    @JoinColumn(name = "taker_id", insertable = false, updatable = false)
+    Member taker;
 
 }

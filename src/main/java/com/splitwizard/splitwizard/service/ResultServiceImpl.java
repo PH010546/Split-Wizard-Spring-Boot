@@ -168,8 +168,8 @@ public class ResultServiceImpl implements ResultService {
             Results result = resultDAO.getReferenceById(resultId);
 
             // update net in conn
-            MemberGroupConn payerConn = connDAO.findByGroupIdAndMemberId(result.getGroupId(), result.getPayerId());
-            MemberGroupConn owerConn = connDAO.findByGroupIdAndMemberId(result.getGroupId(), result.getOwerId());
+            MemberGroupConn payerConn = connDAO.findByGroupIdAndMemberId(result.getGroupId(), result.getTakerId());
+            MemberGroupConn owerConn = connDAO.findByGroupIdAndMemberId(result.getGroupId(), result.getGiverId());
 
             // if status == false means he's paying now,
             // so need to reduce payer's net and increase ower's

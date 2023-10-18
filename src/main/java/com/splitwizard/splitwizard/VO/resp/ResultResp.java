@@ -26,10 +26,10 @@ public class ResultResp {
         resp.setId(pojo.getId());
         resp.setStatus(pojo.getStatus());
         resp.setAmount(pojo.getAmount());
-        resp.setOwerId(pojo.getOwerId());
-        resp.setPayerId(pojo.getPayerId());
-        resp.setOwer(memberDTO.convert(pojo.getOwer()));
-        resp.setPayer(memberDTO.convert(pojo.getPayer()));
+        resp.setOwerId(pojo.getGiverId());
+        resp.setPayerId(pojo.getTakerId());
+        resp.setOwer(memberDTO.convert(pojo.getGiver()));
+        resp.setPayer(memberDTO.convert(pojo.getTaker()));
 
         return resp;
     }

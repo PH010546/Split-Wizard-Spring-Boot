@@ -37,8 +37,8 @@ public class ResultDTO {
         pojo.setAmount(this.amount);
         pojo.setStatus(this.status);
         pojo.setGroupId(this.groupId);
-        pojo.setOwerId(this.owerId);
-        pojo.setPayerId(this.payerId);
+        pojo.setGiverId(this.owerId);
+        pojo.setTakerId(this.payerId);
         pojo.setCreatedTime(this.createdTime);
         pojo.setUpdateTime(this.updateTime);
         pojo.setId(this.id);
