@@ -5,6 +5,7 @@ import com.splitwizard.splitwizard.POJO.ItemDetail;
 import com.splitwizard.splitwizard.POJO.Results;
 import lombok.Getter;
 import lombok.Setter;
+import org.jetbrains.annotations.NotNull;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
@@ -24,14 +25,14 @@ public class OverViewDetailsResp {
 
         List<ResultInOverViewResp> resultRespList = new ArrayList<>(
                 new ResultInOverViewResp().convertPOJOListToRespList(resultList).stream()
-                .filter(resultInOverViewResp -> resultInOverViewResp.status)
+                .filter(resultInOverViewResp -> resultInOverViewResp.status).sorted()
                 .toList());
 
         setResults(resultRespList);
     }
 
     @Getter @Setter
-    public class ItemDetailInOverViewResp {
+    public class ItemDetailInOverViewResp implements Comparable<ItemDetailInOverViewResp>{
         //details 幫我依照itemTimeASC，
 
         Integer id;
@@ -60,12 +61,23 @@ public class OverViewDetailsResp {
                 respList.add(convertPOJOToResp(pojo));
             }
 
+            respList.sort(null);
+
             return respList;
+        }
+
+        @Override
+        public int compareTo(@NotNull ItemDetailInOverViewResp other) {
+
+            int thisTime = Long.valueOf(this.getItem().getItemTime().replaceAll("\\D", "")).intValue();
+            int otherTime = Long.valueOf(other.getItem().getItemTime().replaceAll("\\D", "")).intValue();
+
+            return thisTime - otherTime;
         }
     }
 
     @Getter @Setter
-    public class ResultInOverViewResp {
+    public class ResultInOverViewResp implements Comparable<ResultInOverViewResp>{
         //results只要status是true的就好喔!
 
         Integer id;
@@ -99,6 +111,11 @@ public class OverViewDetailsResp {
                 respList.add(convertPOJOToResp(pojo));
             }
             return respList;
+        }
+
+        @Override
+        public int compareTo(@NotNull ResultInOverViewResp o) {
+            return this.updatedTime.compareTo(o.updatedTime);
         }
     }
 }
