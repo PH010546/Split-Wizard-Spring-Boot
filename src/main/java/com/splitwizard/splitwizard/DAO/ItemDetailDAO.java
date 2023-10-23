@@ -10,4 +10,6 @@ public interface ItemDetailDAO extends JpaRepository<ItemDetail, Integer> {
     List<ItemDetail> findAllByItemId(Integer itemId);
     void deleteItemDetailsByItemId(Integer itemId);
 
+    List<ItemDetail> findAllByMemberIdAndItemId(Integer memberId, Integer itemId);
+
 }

@@ -19,4 +19,10 @@ public class OverViewController {
     public Result getOverView(@PathVariable(name = "groupId") Integer groupId){
         return service.getOverView(groupId);
     }
+
+    @GetMapping("/groups/{groupId}/{memberId}/details")
+    public Result getMemberDetailsInGroup(@PathVariable(name = "groupId") Integer groupId,
+                                          @PathVariable(name = "memberId") Integer memberId){
+        return service.getItemDetailsOfMemberInGroup(groupId, memberId);
+    }
 }
