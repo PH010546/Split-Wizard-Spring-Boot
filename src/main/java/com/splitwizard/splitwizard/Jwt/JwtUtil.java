@@ -20,15 +20,17 @@ import java.util.stream.Collectors;
 public class JwtUtil {
     private static final Logger logger = LoggerFactory.getLogger(JwtUtil.class);
     private static final String CLAIMS_KEY_USER_ROLES = "userRoles";
+    private static final String CLAIMS_KEY_USER_ID = "userId";
 
 //    private static @Value("${jwt.signKey}") String jwtSignKey;
     private final String jwtSignKey = "sexyEasonHasadghaspdogiuhas;dlgkhjasfgarharhsarh";
 //    private static @Value("${jwt.expireTimeAsSec}") long jwtExpireTimeAsSec;
     private final Long jwtExpireTimeAsSec = 3600000L;
-    public String createToken(String userName, List<String> userRoles){
+    public String createToken(String userName, List<String> userRoles, Integer userId){
         String token = Jwts.builder()
                 .setSubject(userName)
                 .addClaims(Map.of(CLAIMS_KEY_USER_ROLES, userRoles)) // 把 userRoles 也記錄進來
+                .addClaims(Map.of(CLAIMS_KEY_USER_ID, userId))
                 .setIssuedAt(new Date()) //產生 JWT 的時間
                 .setExpiration(Date.from(Instant.now().plusSeconds(jwtExpireTimeAsSec))) // JWT 過期時間
                 .signWith(Keys.hmacShaKeyFor(jwtSignKey.getBytes(StandardCharsets.UTF_8)), SignatureAlgorithm.HS256)
@@ -63,5 +65,9 @@ public class JwtUtil {
         List<String> userRoles = parseToken(token).get(CLAIMS_KEY_USER_ROLES, List.class);
         logger.debug("userRoles : {}", userRoles);
         return userRoles.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
+    }
+
+    public Integer parseUserIdFromToken(String token){
+        return parseToken(token).get(CLAIMS_KEY_USER_ID, Integer.class);
     }
 }

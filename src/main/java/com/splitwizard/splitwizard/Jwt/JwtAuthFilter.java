@@ -57,7 +57,8 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                 //       讓系統知道用戶已登入認証成功
                 String userName = jwtUtil.parseUserNameFromToken(token); // 解析失敗時會丟出 exception
                 List<SimpleGrantedAuthority> userAuthorities = jwtUtil.parseUserAuthoritiesFromToken(token); // 解析失敗時會丟出 exception
-                UserDetails userDetails = new UserDetailsImpl(userName, null, userAuthorities); // 因為 token 裡不會記錄 password, 所以 constructor 裡的 password 欄位帶入 null
+                Integer userId = jwtUtil.parseUserIdFromToken(token);
+                UserDetails userDetails = new UserDetailsImpl(userName, null, userAuthorities, userId); // 因為 token 裡不會記錄 password, 所以 constructor 裡的 password 欄位帶入 null
 
                 // 如果想讓系統更安全，可以用 token 取得的 userName 反查 userDetailsService 之後產生 UserDetails instance
                 // 但是 userDetailsService 的實作大多是到 DB 查資料，如果 http request 數量很大的話，要考慮幫它加上 cache 机制降低 DB 負擔

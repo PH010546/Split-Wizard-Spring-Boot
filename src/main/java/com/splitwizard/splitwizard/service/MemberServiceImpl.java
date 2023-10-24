@@ -69,7 +69,10 @@ public class MemberServiceImpl implements MemberService {
             resp.setAccount(member.getAccount());
             resp.setName(member.getName());
             resp.setUID(member.getUID());
-            resp.setToken(new JwtUtil().createToken(member.getAccount(), List.of(member.getAuthority())));
+            resp.setToken(new JwtUtil().createToken(
+                    member.getAccount(),
+                    List.of(member.getAuthority()),
+                    member.getId()));
 
             return R.success(resp);
         }catch (Exception e){

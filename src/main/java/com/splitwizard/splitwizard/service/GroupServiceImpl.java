@@ -80,7 +80,7 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
-    public Result findAllCurrentGroupsWithMembers(String memberAccount) {
+    public Result findAllCurrentGroupsWithMembers(Integer memberId) {
         try{
             // TODO: need to modify
             List<Group> groupList = dao.findAll();
@@ -88,7 +88,7 @@ public class GroupServiceImpl implements GroupService {
 
             for (Group g : groupList){
                 for (Member m : g.getMembers()){
-                    if (Objects.equals(m.getAccount(), memberAccount)){
+                    if (Objects.equals(m.getId(), memberId)){
                         resultList.add(g);
                     }
                 }
