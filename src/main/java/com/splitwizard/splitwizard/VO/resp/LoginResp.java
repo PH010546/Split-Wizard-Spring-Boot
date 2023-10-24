@@ -9,5 +9,7 @@ public class LoginResp {
     Integer id;
     String account;
     String name;
+    String UID;
     String token;
+
 }
