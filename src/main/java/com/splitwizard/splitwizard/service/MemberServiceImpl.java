@@ -1,10 +1,11 @@
 package com.splitwizard.splitwizard.service;
 
 import com.splitwizard.splitwizard.DAO.MemberRepository;
-import com.splitwizard.splitwizard.DTO.MemberDTO;
+import com.splitwizard.splitwizard.Jwt.JwtUtil;
 import com.splitwizard.splitwizard.POJO.Member;
 import com.splitwizard.splitwizard.Util.Result;
 import com.splitwizard.splitwizard.VO.resp.AllMemberResp;
+import com.splitwizard.splitwizard.VO.resp.LoginResp;
 import com.splitwizard.splitwizard.service.intf.MemberService;
 import jakarta.servlet.http.HttpSession;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -22,7 +23,7 @@ public class MemberServiceImpl implements MemberService {
     private final MemberRepository dao;
     private final BCryptPasswordEncoder passwordEncoder;
     private final Result R;
-    private final MemberDTO dto;
+//    private final MemberDTO dto;
     private final HttpSession session;
 
     @Autowired
@@ -31,7 +32,7 @@ public class MemberServiceImpl implements MemberService {
         this.dao = dao;
         this.passwordEncoder = new BCryptPasswordEncoder();
         this.R = new Result();
-        this.dto = new MemberDTO();
+//        this.dto = new MemberDTO();
         this.session = session;
     }
 
@@ -62,7 +63,14 @@ public class MemberServiceImpl implements MemberService {
             Member member = dao.findByAccount(account);
             if (!passwordEncoder.matches(password, member.getPassword())) return R.fail("帳號或密碼錯誤");
 
-            return R.success(dto.convert(member));
+            // 轉換成response
+            LoginResp resp = new LoginResp();
+            resp.setId(member.getId());
+            resp.setAccount(member.getAccount());
+            resp.setName(member.getName());
+            resp.setToken(new JwtUtil().createToken(member.getAccount(), List.of(member.getAuthority())));
+
+            return R.success(resp);
         }catch (Exception e){
             e.printStackTrace();
             return R.fail(e.getMessage());

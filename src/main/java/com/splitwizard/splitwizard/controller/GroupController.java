@@ -1,13 +1,15 @@
 package com.splitwizard.splitwizard.controller;
 
-import com.splitwizard.splitwizard.Util.Result;
 import com.splitwizard.splitwizard.POJO.Group;
+import com.splitwizard.splitwizard.Util.Result;
 import com.splitwizard.splitwizard.service.GroupServiceImpl;
-import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
+
 @RestController
+//@PreAuthorize("hasRole('user')")
 public class GroupController {
 
     private final GroupServiceImpl service;
@@ -19,8 +21,9 @@ public class GroupController {
 
     }
     @GetMapping(value = "/groups")
-    public Result getGroup(HttpSession session){
-        return service.findAllCurrentGroupsWithMembers((Integer) session.getAttribute("currentUser"));
+    public Result getGroup(Principal principal){
+
+        return service.findAllCurrentGroupsWithMembers(principal.getName());
     }
 
     @PostMapping(value = "/addGroup")

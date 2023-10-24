@@ -1,12 +1,17 @@
 package com.splitwizard.splitwizard.controller;
 
-import com.splitwizard.splitwizard.DTO.MemberDTO;
-import com.splitwizard.splitwizard.Util.Result;
 import com.splitwizard.splitwizard.POJO.Member;
+import com.splitwizard.splitwizard.Util.Result;
 import com.splitwizard.splitwizard.service.MemberServiceImpl;
-import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class MemberController {
@@ -19,12 +24,18 @@ public class MemberController {
         this.service = service;
     }
 
-    @PostMapping(value = "/login")
-    public Result login(@RequestBody Member member, HttpSession session){
-        Result result = service.login(member.getAccount(), member.getPassword());
-        MemberDTO currentUser = (MemberDTO) result.getResult();
+    @Autowired
+    private AuthenticationManager authenticationManager;
 
-        session.setAttribute("currentUser", currentUser.getId());
+    @PostMapping(value = "/login")
+    public Result login(@RequestBody Member member){
+        Result result = service.login(member.getAccount(), member.getPassword());
+//        MemberDTO currentUser = (MemberDTO) result.getResult();
+
+        Authentication authAfterSuccessLogin = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(member.getAccount(), member.getPassword()));
+        SecurityContextHolder.getContext().setAuthentication(authAfterSuccessLogin);
+
+//        session.setAttribute("currentUser", currentUser.getId());
 
         return result;
     }

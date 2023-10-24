@@ -10,7 +10,7 @@ public interface GroupService {
     Result addGroup(Group group);
     Result updateGroupName(String name, Integer id);
     Result deleteGroup(Integer id);
-    Result findAllCurrentGroupsWithMembers(Integer currentUserId);
+    Result findAllCurrentGroupsWithMembers(String memberAccount);
     Result resetRedirectAndCleanUnpayedResult(Integer groupId);
     Result getMembersInGroup(Integer groupId);
 

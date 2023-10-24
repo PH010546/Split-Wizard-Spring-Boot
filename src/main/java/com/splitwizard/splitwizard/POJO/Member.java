@@ -1,5 +1,6 @@
 package com.splitwizard.splitwizard.POJO;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import lombok.Data;
@@ -28,5 +29,8 @@ public class Member {
     @Column(name = "update_time", insertable = false)
     private Timestamp updateTime;
     private String UID;
+
+    @JsonIgnore
+    private String authority;
 
 }
