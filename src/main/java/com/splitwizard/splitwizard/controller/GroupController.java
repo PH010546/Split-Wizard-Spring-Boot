@@ -1,18 +1,12 @@
 package com.splitwizard.splitwizard.controller;
 
-import com.splitwizard.splitwizard.Jwt.CustomJwtPrincipal;
 import com.splitwizard.splitwizard.Jwt.UserDetailsImpl;
 import com.splitwizard.splitwizard.POJO.Group;
 import com.splitwizard.splitwizard.Util.Result;
 import com.splitwizard.splitwizard.service.GroupServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
-
-import java.security.Principal;
-import java.security.Security;
 
 @RestController
 //@PreAuthorize("hasRole('user')")

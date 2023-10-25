@@ -4,16 +4,17 @@ import com.splitwizard.splitwizard.DAO.GroupRepository;
 import com.splitwizard.splitwizard.DAO.MemberRepository;
 import com.splitwizard.splitwizard.DAO.NotificationRepository;
 import com.splitwizard.splitwizard.DTO.NotificationDTO;
+import com.splitwizard.splitwizard.Jwt.UserDetailsImpl;
+import com.splitwizard.splitwizard.POJO.Notification;
 import com.splitwizard.splitwizard.Util.NotificationType;
 import com.splitwizard.splitwizard.Util.Result;
 import com.splitwizard.splitwizard.VO.NotificationVO;
-import com.splitwizard.splitwizard.POJO.Notification;
 import com.splitwizard.splitwizard.service.intf.NotificationService;
-import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,14 +29,12 @@ public class NotificationServiceImpl implements NotificationService {
     private final GroupRepository groupDAO;
     private final MemberRepository memberDAO;
     private final Result R;
-    private final HttpSession session;
     private final NotificationDTO dto;
     @Autowired
-    public NotificationServiceImpl(NotificationRepository dao, HttpSession session,
+    public NotificationServiceImpl(NotificationRepository dao,
                                    GroupRepository groupDAO, MemberRepository memberDAO){
         this.dao = dao;
         this.R = new Result();
-        this.session = session;
         this.dto = new NotificationDTO();
         this.groupDAO = groupDAO;
         this.memberDAO = memberDAO;
@@ -45,8 +44,8 @@ public class NotificationServiceImpl implements NotificationService {
     @Override
     public Result addNotifications(NotificationVO notificationVO) {
         try{
-
-            notificationVO.setSenderId((Integer) session.getAttribute("currentUser"));
+            Integer currentUserId = ((UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUserId();
+            notificationVO.setSenderId(currentUserId);
 
             for (Integer i : notificationVO.getReceiverIds()){
 

@@ -2,14 +2,16 @@ package com.splitwizard.splitwizard.service;
 
 import com.splitwizard.splitwizard.DAO.MemberRepository;
 import com.splitwizard.splitwizard.Jwt.JwtUtil;
+import com.splitwizard.splitwizard.Jwt.UserDetailsImpl;
 import com.splitwizard.splitwizard.POJO.Member;
 import com.splitwizard.splitwizard.Util.Result;
+import com.splitwizard.splitwizard.VO.MemberVO;
 import com.splitwizard.splitwizard.VO.resp.AllMemberResp;
 import com.splitwizard.splitwizard.VO.resp.LoginResp;
 import com.splitwizard.splitwizard.service.intf.MemberService;
-import jakarta.servlet.http.HttpSession;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -24,16 +26,13 @@ public class MemberServiceImpl implements MemberService {
     private final BCryptPasswordEncoder passwordEncoder;
     private final Result R;
 //    private final MemberDTO dto;
-    private final HttpSession session;
 
     @Autowired
-    public MemberServiceImpl(MemberRepository dao, HttpSession session){
+    public MemberServiceImpl(MemberRepository dao){
 
         this.dao = dao;
         this.passwordEncoder = new BCryptPasswordEncoder();
         this.R = new Result();
-//        this.dto = new MemberDTO();
-        this.session = session;
     }
 
     public Result getById(Integer id){
@@ -65,11 +64,15 @@ public class MemberServiceImpl implements MemberService {
 
             // 轉換成response
             LoginResp resp = new LoginResp();
-            resp.setId(member.getId());
-            resp.setAccount(member.getAccount());
-            resp.setName(member.getName());
-            resp.setUID(member.getUID());
-            resp.setToken(new JwtUtil().createToken(
+            MemberVO memberVO = new MemberVO();
+
+            memberVO.setId(member.getId());
+            memberVO.setAccount(member.getAccount());
+            memberVO.setName(member.getName());
+            memberVO.setUID(member.getUID());
+
+            resp.setMember(memberVO);
+            resp.setAuthToken(new JwtUtil().createToken(
                     member.getAccount(),
                     List.of(member.getAuthority()),
                     member.getId()));
@@ -108,9 +111,12 @@ public class MemberServiceImpl implements MemberService {
         try{
             List<Member> members = dao.findAll();
             List<Member> result = new ArrayList<>();
+            Integer currentUserId = ((UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUserId();
+
+
 
             for (Member m : members){
-                if (!Objects.equals(m.getId(), session.getAttribute("currentUser"))){
+                if (!Objects.equals(m.getId(), currentUserId)){
                     result.add(m);
                 }
             }

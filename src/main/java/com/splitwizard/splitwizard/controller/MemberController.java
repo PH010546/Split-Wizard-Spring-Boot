@@ -30,12 +30,9 @@ public class MemberController {
     @PostMapping(value = "/login")
     public Result login(@RequestBody Member member){
         Result result = service.login(member.getAccount(), member.getPassword());
-//        MemberDTO currentUser = (MemberDTO) result.getResult();
 
         Authentication authAfterSuccessLogin = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(member.getAccount(), member.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authAfterSuccessLogin);
-
-//        session.setAttribute("currentUser", currentUser.getId());
 
         return result;
     }
@@ -49,5 +46,17 @@ public class MemberController {
     @GetMapping(value = "/allMembers")
     public Result getAllMember(){
         return service.getAllMemberWithoutPassword();
+    }
+
+    @PostMapping(value = "memberLogout")
+    public Result logout(){
+        SecurityContextHolder.clearContext();
+        return new Result().success("logout success");
+    }
+
+    // TODO: add a auth controller? or maybe can put it in filterChain?
+    @GetMapping(value = "test-token")
+    public Result testToken(){
+        return new Result().success("token pass");
     }
 }
