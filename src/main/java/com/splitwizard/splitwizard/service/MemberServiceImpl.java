@@ -85,11 +85,10 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public Result register(Member member) {
+    public Result register(Member member) throws Exception{
 
-        try{
             // 檢查帳號是否存在
-            if (dao.findByAccount(member.getAccount()) != null) return R.fail("帳號已存在");
+            if (dao.findByAccount(member.getAccount()) != null) throw new Exception("帳號已存在");
 
             // 加密密碼
             member.setPassword(passwordEncoder.encode(member.getPassword()));
@@ -97,13 +96,11 @@ public class MemberServiceImpl implements MemberService {
             // 新增UID
             member.setUID("#" + RandomStringUtils.randomAlphanumeric(5).toUpperCase());
 
+            // 新增authority
+            member.setAuthority("user");
+
             // 儲存進DB
             return R.success(new AllMemberResp().convertPOJOToResp(dao.save(member)));
-        }catch (Exception e){
-            e.printStackTrace();
-            return R.fail(e.getMessage());
-        }
-
     }
 
     public Result getAllMemberWithoutPassword(){

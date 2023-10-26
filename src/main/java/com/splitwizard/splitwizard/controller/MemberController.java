@@ -8,10 +8,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class MemberController {
@@ -39,8 +36,14 @@ public class MemberController {
 
     @PostMapping(value = "/register")
     public Result register(@RequestBody Member member){
+        try{
+            service.register(member);
 
-        return service.register(member);
+            return login(member);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new Result().fail(e.getMessage());
+        }
     }
 
     @GetMapping(value = "/allMembers")
