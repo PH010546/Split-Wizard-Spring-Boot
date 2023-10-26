@@ -15,7 +15,7 @@ public class CorsFilterConfiguration {
 
         CorsConfiguration corsConfiguration = new CorsConfiguration();
 
-        corsConfiguration.addAllowedOrigin("http://localhost:3000/");
+        corsConfiguration.addAllowedOrigin("http://splitwizard.s3-website-ap-northeast-1.amazonaws.com/");
         corsConfiguration.addAllowedHeader("*");
         corsConfiguration.addAllowedMethod("*");
         corsConfiguration.setAllowCredentials(true);
