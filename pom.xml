@@ -110,12 +110,6 @@
 			<version>1.1.1</version>
 		</dependency>
 
-		<!--	Session 	-->
-		<dependency>
-			<groupId>org.springframework.session</groupId>
-			<artifactId>spring-session-jdbc</artifactId>
-		</dependency>
-
 		<!--    Socket io   -->
 		<dependency>
 			<groupId>com.corundumstudio.socketio</groupId>

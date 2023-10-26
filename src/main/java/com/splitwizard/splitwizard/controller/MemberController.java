@@ -4,11 +4,11 @@ import com.splitwizard.splitwizard.POJO.Member;
 import com.splitwizard.splitwizard.Util.Result;
 import com.splitwizard.splitwizard.service.MemberServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class MemberController {
@@ -21,25 +21,21 @@ public class MemberController {
         this.service = service;
     }
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
-
     @PostMapping(value = "/login")
     public Result login(@RequestBody Member member){
-        Result result = service.login(member.getAccount(), member.getPassword());
 
-        Authentication authAfterSuccessLogin = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(member.getAccount(), member.getPassword()));
-        SecurityContextHolder.getContext().setAuthentication(authAfterSuccessLogin);
-
-        return result;
+        try{
+            return service.login(member.getAccount(), member.getPassword());
+        }catch (Exception e){
+            e.printStackTrace();
+            return new Result().fail(e.getMessage());
+        }
     }
 
     @PostMapping(value = "/register")
     public Result register(@RequestBody Member member){
         try{
-            service.register(member);
-
-            return login(member);
+            return service.register(member);
         }catch (Exception e){
             e.printStackTrace();
             return new Result().fail(e.getMessage());
