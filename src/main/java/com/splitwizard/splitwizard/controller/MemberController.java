@@ -1,7 +1,8 @@
 package com.splitwizard.splitwizard.controller;
 
-import com.splitwizard.splitwizard.POJO.Member;
 import com.splitwizard.splitwizard.Util.Result;
+import com.splitwizard.splitwizard.VO.req.LoginReq;
+import com.splitwizard.splitwizard.VO.req.RegisterReq;
 import com.splitwizard.splitwizard.service.MemberServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -23,12 +24,12 @@ public class MemberController {
     }
 
     @PostMapping(value = "/login")
-    public Result login(@RequestBody Member member) {
+    public Result login(@RequestBody LoginReq member) {
         return service.login(member.getAccount(), member.getPassword());
     }
 
     @PostMapping(value = "/register")
-    public Result register(@RequestBody Member member) {
+    public Result register(@RequestBody RegisterReq member) {
         return service.register(member);
     }
 

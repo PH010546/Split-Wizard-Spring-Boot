@@ -6,6 +6,7 @@ import com.splitwizard.splitwizard.Jwt.UserDetailsImpl;
 import com.splitwizard.splitwizard.POJO.Member;
 import com.splitwizard.splitwizard.Util.Result;
 import com.splitwizard.splitwizard.VO.MemberVO;
+import com.splitwizard.splitwizard.VO.req.RegisterReq;
 import com.splitwizard.splitwizard.VO.resp.AllMemberResp;
 import com.splitwizard.splitwizard.VO.resp.LoginResp;
 import com.splitwizard.splitwizard.service.intf.MemberService;
@@ -93,27 +94,30 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public Result register(Member member){
+    public Result register(RegisterReq req){
 
         try{
             // 先將帳號及密碼儲存
-            String account = member.getAccount();
-            String password = member.getPassword();
+            String account = req.getAccount();
+            String password = req.getPassword();
 
             // 檢查帳號是否存在
-            if (dao.findByAccount(member.getAccount()) != null) throw new Exception("帳號已存在");
+            if (dao.findByAccount(req.getAccount()) != null) throw new Exception("帳號已存在");
+
+            Member memberForSaving = new Member();
 
             // 加密密碼
-            member.setPassword(passwordEncoder.encode(member.getPassword()));
+            memberForSaving.setPassword(passwordEncoder.encode(req.getPassword()));
 
             // 新增UID
-            member.setUID("#" + RandomStringUtils.randomAlphanumeric(5).toUpperCase());
+            memberForSaving.setUID("#" + RandomStringUtils.randomAlphanumeric(5).toUpperCase());
 
+            // TODO: change to DB default?
             // 新增authority
-            member.setAuthority("user");
+            memberForSaving.setAuthority("user");
 
             // 儲存進DB
-            dao.save(member);
+            dao.save(memberForSaving);
 
             // 直接登入
             return login(account, password);

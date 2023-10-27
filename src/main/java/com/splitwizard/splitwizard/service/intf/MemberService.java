@@ -1,12 +1,12 @@
 package com.splitwizard.splitwizard.service.intf;
 
 import com.splitwizard.splitwizard.Util.Result;
-import com.splitwizard.splitwizard.POJO.Member;
+import com.splitwizard.splitwizard.VO.req.RegisterReq;
 
 public interface MemberService {
 
     Result getById(Integer id);
     Result getAll();
     Result login(String account, String password);
-    Result register(Member member);
+    Result register(RegisterReq req);
 }
