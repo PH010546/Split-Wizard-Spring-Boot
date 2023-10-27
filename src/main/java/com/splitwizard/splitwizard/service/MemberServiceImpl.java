@@ -32,7 +32,7 @@ public class MemberServiceImpl implements MemberService {
 
     @Autowired
     public MemberServiceImpl(MemberRepository dao,
-                             AuthenticationManager authenticationManager){
+                             AuthenticationManager authenticationManager) {
 
         this.dao = dao;
         this.passwordEncoder = new BCryptPasswordEncoder();
@@ -40,97 +40,96 @@ public class MemberServiceImpl implements MemberService {
         this.R = new Result();
     }
 
-    public Result getById(Integer id){
+    public Result getById(Integer id) {
 
         return null;
 
     }
 
-    public Result getAll(){
+    public Result getAll() {
 
-        try{
+        try {
             return R.success(dao.findAll());
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return R.fail(e.getMessage());
         }
     }
 
-    public Result login(String account, String password) throws Exception{
+    public Result login(String account, String password) throws Exception {
 
-            // 檢查帳號是否存在
-            if (dao.findByAccount(account) == null) throw new Exception("帳號或密碼錯誤");
+        // 檢查帳號是否存在
+        if (dao.findByAccount(account) == null) throw new Exception("帳號或密碼錯誤");
 
 
-            // 檢查帳號密碼是否符合
-            Member member = dao.findByAccount(account);
-            if (!passwordEncoder.matches(password, member.getPassword())) throw new Exception("帳號或密碼錯誤");
+        // 檢查帳號密碼是否符合
+        Member member = dao.findByAccount(account);
+        if (!passwordEncoder.matches(password, member.getPassword())) throw new Exception("帳號或密碼錯誤");
 
-            // 驗證與發token
+        // 驗證與發token
         Authentication authAfterSuccessLogin = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(account, password));
         SecurityContextHolder.getContext().setAuthentication(authAfterSuccessLogin);
 
-            // 轉換成response
-            LoginResp resp = new LoginResp();
-            MemberVO memberVO = new MemberVO();
+        // 轉換成response
+        LoginResp resp = new LoginResp();
+        MemberVO memberVO = new MemberVO();
 
-            memberVO.setId(member.getId());
-            memberVO.setAccount(member.getAccount());
-            memberVO.setName(member.getName());
-            memberVO.setUID(member.getUID());
+        memberVO.setId(member.getId());
+        memberVO.setAccount(member.getAccount());
+        memberVO.setName(member.getName());
+        memberVO.setUID(member.getUID());
 
-            resp.setMember(memberVO);
-            resp.setAuthToken(new JwtUtil().createToken(
-                    member.getAccount(),
-                    List.of(member.getAuthority()),
-                    member.getId()));
+        resp.setMember(memberVO);
+        resp.setAuthToken(new JwtUtil().createToken(
+                member.getAccount(),
+                List.of(member.getAuthority()),
+                member.getId()));
 
-            return R.success(resp);
+        return R.success(resp);
     }
 
     @Override
-    public Result register(Member member) throws Exception{
+    public Result register(Member member) throws Exception {
 
         // 先將帳號及密碼儲存
         String account = member.getAccount();
         String password = member.getPassword();
 
-            // 檢查帳號是否存在
-            if (dao.findByAccount(member.getAccount()) != null) throw new Exception("帳號已存在");
+        // 檢查帳號是否存在
+        if (dao.findByAccount(member.getAccount()) != null) throw new Exception("帳號已存在");
 
-            // 加密密碼
-            member.setPassword(passwordEncoder.encode(member.getPassword()));
+        // 加密密碼
+        member.setPassword(passwordEncoder.encode(member.getPassword()));
 
-            // 新增UID
-            member.setUID("#" + RandomStringUtils.randomAlphanumeric(5).toUpperCase());
+        // 新增UID
+        member.setUID("#" + RandomStringUtils.randomAlphanumeric(5).toUpperCase());
 
-            // 新增authority
-            member.setAuthority("user");
+        // 新增authority
+        member.setAuthority("user");
 
-            // 儲存進DB
+        // 儲存進DB
         dao.save(member);
 
-            // 直接登入
+        // 直接登入
         return login(account, password);
     }
 
-    public Result getAllMemberWithoutPassword(){
+    public Result getAllMemberWithoutPassword() {
 
-        try{
+        try {
             List<Member> members = dao.findAll();
             List<Member> result = new ArrayList<>();
             Integer currentUserId = ((UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUserId();
 
 
-
-            for (Member m : members){
-                if (!Objects.equals(m.getId(), currentUserId)){
+            for (Member m : members) {
+                if (!Objects.equals(m.getId(), currentUserId)) {
                     result.add(m);
                 }
             }
 
             return R.success(new AllMemberResp().convertPOJOListToRespList(result));
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return R.fail(e.getMessage());
         }
