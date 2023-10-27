@@ -7,6 +7,6 @@ public interface MemberService {
 
     Result getById(Integer id);
     Result getAll();
-    Result login(String account, String password) throws Exception;
-    Result register(Member member) throws Exception;
+    Result login(String account, String password);
+    Result register(Member member);
 }

@@ -16,46 +16,36 @@ public class MemberController {
     // TODO: change the request body to VO
 
     private final MemberServiceImpl service;
+
     @Autowired
-    MemberController(MemberServiceImpl service){
+    MemberController(MemberServiceImpl service) {
         this.service = service;
     }
 
     @PostMapping(value = "/login")
-    public Result login(@RequestBody Member member){
-
-        try{
-            return service.login(member.getAccount(), member.getPassword());
-        }catch (Exception e){
-            e.printStackTrace();
-            return new Result().fail(e.getMessage());
-        }
+    public Result login(@RequestBody Member member) {
+        return service.login(member.getAccount(), member.getPassword());
     }
 
     @PostMapping(value = "/register")
-    public Result register(@RequestBody Member member){
-        try{
-            return service.register(member);
-        }catch (Exception e){
-            e.printStackTrace();
-            return new Result().fail(e.getMessage());
-        }
+    public Result register(@RequestBody Member member) {
+        return service.register(member);
     }
 
     @GetMapping(value = "/allMembers")
-    public Result getAllMember(){
+    public Result getAllMember() {
         return service.getAllMemberWithoutPassword();
     }
 
     @PostMapping(value = "memberLogout")
-    public Result logout(){
+    public Result logout() {
         SecurityContextHolder.clearContext();
         return new Result().success("logout success");
     }
 
     // TODO: add a auth controller? or maybe can put it in filterChain?
     @GetMapping(value = "test-token")
-    public Result testToken(){
+    public Result testToken() {
         return new Result().success("token pass");
     }
 }

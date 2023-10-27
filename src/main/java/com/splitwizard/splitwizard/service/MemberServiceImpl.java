@@ -56,62 +56,71 @@ public class MemberServiceImpl implements MemberService {
         }
     }
 
-    public Result login(String account, String password) throws Exception {
+    public Result login(String account, String password){
 
-        // 檢查帳號是否存在
-        if (dao.findByAccount(account) == null) throw new Exception("帳號或密碼錯誤");
+        try{
+            // 檢查帳號是否存在
+            if (dao.findByAccount(account) == null) throw new Exception("帳號或密碼錯誤");
 
+            // 檢查帳號密碼是否符合
+            Member member = dao.findByAccount(account);
+            if (!passwordEncoder.matches(password, member.getPassword())) throw new Exception("帳號或密碼錯誤");
 
-        // 檢查帳號密碼是否符合
-        Member member = dao.findByAccount(account);
-        if (!passwordEncoder.matches(password, member.getPassword())) throw new Exception("帳號或密碼錯誤");
+            // 驗證與發token
+            Authentication authAfterSuccessLogin = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(account, password));
+            SecurityContextHolder.getContext().setAuthentication(authAfterSuccessLogin);
 
-        // 驗證與發token
-        Authentication authAfterSuccessLogin = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(account, password));
-        SecurityContextHolder.getContext().setAuthentication(authAfterSuccessLogin);
+            // 轉換成response
+            LoginResp resp = new LoginResp();
+            MemberVO memberVO = new MemberVO();
 
-        // 轉換成response
-        LoginResp resp = new LoginResp();
-        MemberVO memberVO = new MemberVO();
+            memberVO.setId(member.getId());
+            memberVO.setAccount(member.getAccount());
+            memberVO.setName(member.getName());
+            memberVO.setUID(member.getUID());
 
-        memberVO.setId(member.getId());
-        memberVO.setAccount(member.getAccount());
-        memberVO.setName(member.getName());
-        memberVO.setUID(member.getUID());
+            resp.setMember(memberVO);
+            resp.setAuthToken(new JwtUtil().createToken(
+                    member.getAccount(),
+                    List.of(member.getAuthority()),
+                    member.getId()));
 
-        resp.setMember(memberVO);
-        resp.setAuthToken(new JwtUtil().createToken(
-                member.getAccount(),
-                List.of(member.getAuthority()),
-                member.getId()));
-
-        return R.success(resp);
+            return R.success(resp);
+        }catch (Exception e){
+            e.printStackTrace();
+            return R.fail(e.getMessage());
+        }
     }
 
     @Override
-    public Result register(Member member) throws Exception {
+    public Result register(Member member){
 
-        // 先將帳號及密碼儲存
-        String account = member.getAccount();
-        String password = member.getPassword();
+        try{
+            // 先將帳號及密碼儲存
+            String account = member.getAccount();
+            String password = member.getPassword();
 
-        // 檢查帳號是否存在
-        if (dao.findByAccount(member.getAccount()) != null) throw new Exception("帳號已存在");
+            // 檢查帳號是否存在
+            if (dao.findByAccount(member.getAccount()) != null) throw new Exception("帳號已存在");
 
-        // 加密密碼
-        member.setPassword(passwordEncoder.encode(member.getPassword()));
+            // 加密密碼
+            member.setPassword(passwordEncoder.encode(member.getPassword()));
 
-        // 新增UID
-        member.setUID("#" + RandomStringUtils.randomAlphanumeric(5).toUpperCase());
+            // 新增UID
+            member.setUID("#" + RandomStringUtils.randomAlphanumeric(5).toUpperCase());
 
-        // 新增authority
-        member.setAuthority("user");
+            // 新增authority
+            member.setAuthority("user");
 
-        // 儲存進DB
-        dao.save(member);
+            // 儲存進DB
+            dao.save(member);
 
-        // 直接登入
-        return login(account, password);
+            // 直接登入
+            return login(account, password);
+        }catch (Exception e){
+            e.printStackTrace();
+            return R.fail(e.getMessage());
+        }
     }
 
     public Result getAllMemberWithoutPassword() {
