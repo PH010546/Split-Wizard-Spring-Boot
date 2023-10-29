@@ -22,8 +22,7 @@ public class MemberGroupConn {
     private Integer memberId;
     @Column(name = "group_id")
     private Integer groupId;
-    @Column(insertable = false)
-    private BigDecimal net;
+    private BigDecimal net = BigDecimal.valueOf(0.0);
     @Column(name = "update_time")
     private Timestamp updateTime;
 

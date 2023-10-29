@@ -76,16 +76,17 @@ public class NotificationDTO {
 
         result.setId(this.getId());
         result.setText(this.getText());
-        result.setCreatedTime(this.getCreatedTime());
-        result.setRead(this.getRead());
         result.setType(this.getType());
         result.setGroup(null);
         result.setSender(null);
         result.setReceiver(null);
+        // ---
+        // TODO: these code are strange, need to be modified
         if (this.getGroup() != null) result.setGroup(this.getGroup().convertDTOToPOJO(groupDAO));
         if (this.getSender() != null) result.setSender(this.getSender().convertDTOToPOJO(memberDAO));
         if (this.getReceiver() != null) result.setReceiver(this.getReceiver().convertDTOToPOJO(memberDAO));
-
+        // ---
+        if (this.getRead() != null) result.setRead(this.getRead()); // the default is "false", but in case we use the converter when the value exists
         return result;
     }
 
