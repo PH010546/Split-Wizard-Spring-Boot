@@ -105,6 +105,8 @@ public class MemberServiceImpl implements MemberService {
             if (dao.findByAccount(req.getAccount()) != null) throw new Exception("帳號已存在");
 
             Member memberForSaving = new Member();
+            memberForSaving.setAccount(account);
+            memberForSaving.setName(req.getName());
 
             // 加密密碼
             memberForSaving.setPassword(passwordEncoder.encode(req.getPassword()));

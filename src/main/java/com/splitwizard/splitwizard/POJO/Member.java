@@ -24,10 +24,12 @@ public class Member {
     private String account;
     private String name;
     private String password;
-    @Column(name = "created_time", updatable = false)
-    private Timestamp createdTime = new Timestamp(System.currentTimeMillis());
-    @Column(name = "update_time")
-    private Timestamp updateTime = new Timestamp(System.currentTimeMillis());
+    @Column(name = "created_time",insertable = false, updatable = false,
+            columnDefinition = "timestamptz default now()")
+    private Timestamp createdTime;
+    @Column(name = "update_time", insertable = false,
+            columnDefinition = "timestamptz default now()")
+    private Timestamp updateTime;
     private String UID;
 
     @JsonIgnore

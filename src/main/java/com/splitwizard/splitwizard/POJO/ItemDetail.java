@@ -21,10 +21,10 @@ public class ItemDetail {
     private Integer itemId;
     private BigDecimal amount;
     private Boolean payer;
-    @Column(name = "created_time",updatable = false)
-    private Timestamp createdTime = new Timestamp(System.currentTimeMillis());
-    @Column(name = "update_time")
-    private Timestamp updateTime = new Timestamp(System.currentTimeMillis());
+    @Column(name = "created_time",insertable = false, updatable = false, columnDefinition = "timestamptz default now()")
+    private Timestamp createdTime;
+    @Column(name = "update_time", insertable = false, columnDefinition = "timestamptz default now()")
+    private Timestamp updateTime;
 
     @ToString.Exclude
     @ManyToOne(fetch = FetchType.EAGER)

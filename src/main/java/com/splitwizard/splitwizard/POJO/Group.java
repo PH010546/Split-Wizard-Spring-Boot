@@ -23,14 +23,17 @@ public class Group {
     private Integer id;
 
     private String name;
-    // need to check if we still want this column or not.
-    private Boolean status = false;
-    private Boolean redirect = false;
-    private Boolean archive = false;
-    @Column(name = "created_time", updatable = false)
-    private Timestamp createdTime = new Timestamp(System.currentTimeMillis());
-    @Column(name = "update_time")
-    private Timestamp updateTime = new Timestamp(System.currentTimeMillis());
+    // TODO: need to check if we still want this column or not.
+    @Column(insertable = false, columnDefinition = "boolean default false")
+    private Boolean status;
+    @Column(insertable = false, columnDefinition = "boolean default false")
+    private Boolean redirect;
+    @Column(insertable = false, columnDefinition = "boolean default false")
+    private Boolean archive;
+    @Column(name = "created_time",insertable = false, updatable = false, columnDefinition = "timestamptz default now()")
+    private Timestamp createdTime;
+    @Column(name = "update_time", insertable = false, columnDefinition = "timestamptz default now()")
+    private Timestamp updateTime;
 
     @ManyToMany
     @JoinTable(

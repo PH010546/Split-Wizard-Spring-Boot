@@ -22,8 +22,9 @@ public class MemberGroupConn {
     private Integer memberId;
     @Column(name = "group_id")
     private Integer groupId;
+    @Column(columnDefinition = "numeric(38, 2) default 0")
     private BigDecimal net = BigDecimal.valueOf(0.0);
-    @Column(name = "update_time")
-    private Timestamp updateTime;
+    @Column(name = "update_time", insertable = false, columnDefinition = "timestamptz default now()")
+    private Timestamp updateTime = new Timestamp(System.currentTimeMillis());
 
 }

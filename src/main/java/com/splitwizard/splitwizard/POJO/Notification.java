@@ -18,9 +18,10 @@ public class Notification {
     private Integer id;
 
     private String text;
-    @Column(name = "created_time", updatable = false)
-    private Timestamp createdTime = new Timestamp(System.currentTimeMillis());
-    private Boolean read = false;
+    @Column(name = "created_time",insertable = false, updatable = false, columnDefinition = "timestamptz default now()")
+    private Timestamp createdTime;
+    @Column(insertable = false, columnDefinition = "boolean default false")
+    private Boolean read ;
     @Convert(converter = NotificationTypeConverter.class)
     private NotificationType type;
 
