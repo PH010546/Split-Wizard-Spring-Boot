@@ -24,7 +24,7 @@ public class GroupController {
     public Result getGroup(){
         UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        return service.findAllCurrentGroupsWithMembers(userDetails.getUserId());
+        return service.findAllCurrentGroupsWithMembers(userDetails.getId());
     }
 
     @PostMapping(value = "/addGroup")

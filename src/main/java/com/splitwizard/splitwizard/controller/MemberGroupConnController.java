@@ -21,7 +21,7 @@ public class MemberGroupConnController {
 
     @PostMapping(value = "/addMemberToGroup")
     public Result addMemberToGroup(@RequestBody MemberGroupConn mgc){
-        Integer currentUserId = ((UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUserId();
+        Integer currentUserId = ((UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
 
         return service.addMemberToGroup(currentUserId, mgc.getGroupId());
     }

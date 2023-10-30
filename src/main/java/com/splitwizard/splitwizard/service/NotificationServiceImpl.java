@@ -44,7 +44,7 @@ public class NotificationServiceImpl implements NotificationService {
     @Override
     public Result addNotifications(NotificationVO notificationVO) {
         try{
-            Integer currentUserId = ((UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUserId();
+            Integer currentUserId = ((UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
             notificationVO.setSenderId(currentUserId);
 
             for (Integer i : notificationVO.getReceiverIds()){

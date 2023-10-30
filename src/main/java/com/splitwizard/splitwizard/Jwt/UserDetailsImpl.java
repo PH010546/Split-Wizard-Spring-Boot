@@ -6,28 +6,25 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 @Getter @Setter
 public class UserDetailsImpl implements UserDetails {
-    private String userName;
+    private String account;
     private String password;
-    private List<SimpleGrantedAuthority> authorities = new ArrayList<>();
-    private Integer userId;
+    private List<SimpleGrantedAuthority> authorities;
+    private Integer id;
+    private String UID;
+    private String memberName;
 
-    public UserDetailsImpl(String userName, String password, SimpleGrantedAuthority authority, Integer userId) {
-        this.userName = userName;
+    public UserDetailsImpl(String account, String password, List<SimpleGrantedAuthority> authorities,
+                           Integer id, String UID, String memberName) {
+        this.account = account;
         this.password = password;
-        this.userId = userId;
-        authorities.add(authority);
-    }
-
-    public UserDetailsImpl(String userName, String password, List<SimpleGrantedAuthority> authorities, Integer userId) {
-        this.userName = userName;
-        this.password = password;
-        this.userId = userId;
+        this.id = id;
         this.authorities = authorities;
+        this.UID = UID;
+        this.memberName = memberName;
     }
 
     @Override
@@ -42,7 +39,7 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public String getUsername() {
-        return userName;
+        return account;
     }
 
     @Override

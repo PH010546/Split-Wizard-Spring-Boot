@@ -1,11 +1,11 @@
 package com.splitwizard.splitwizard.Jwt;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.splitwizard.splitwizard.Util.CustomUserDetailService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,14 +34,16 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     // 用來處理 json <-> object 轉換。ObjectMapper class 會讀 POJO 裡的 @JsonIgnore, @JsonProperty annotation 設定
     private static final ObjectMapper jsonObjectMapper = new ObjectMapper();
 
+    private final JwtUtil jwtUtil;
     @Autowired
-    private JwtUtil jwtUtil;
-
-    @Autowired
-    private CustomUserDetailService userDetailsService;
+    JwtAuthFilter(JwtUtil jwtUtil){
+        this.jwtUtil = jwtUtil;
+    }
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+    protected void doFilterInternal(@NotNull HttpServletRequest request,
+                                    @NotNull HttpServletResponse response,
+                                    @NotNull FilterChain filterChain)
             throws ServletException, IOException {
         try {
             String token = retriveJwt(request);
@@ -55,10 +57,13 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                 //region 當 token 變數可以成功解析出 userName 與 userRoles 時，代表是合法 token，這時可以用 token 裡的資料產生
                 //       登入認証成功後的 Authentication，並將它存放到 SecurityContextHolder.getContext().setAuthentication(...) method
                 //       讓系統知道用戶已登入認証成功
-                String userName = jwtUtil.parseUserNameFromToken(token); // 解析失敗時會丟出 exception
+                String account = jwtUtil.parseUserNameFromToken(token); // 解析失敗時會丟出 exception
                 List<SimpleGrantedAuthority> userAuthorities = jwtUtil.parseUserAuthoritiesFromToken(token); // 解析失敗時會丟出 exception
                 Integer userId = jwtUtil.parseUserIdFromToken(token);
-                UserDetails userDetails = new UserDetailsImpl(userName, null, userAuthorities, userId); // 因為 token 裡不會記錄 password, 所以 constructor 裡的 password 欄位帶入 null
+                String Uid = jwtUtil.parseUIDFromToken(token);
+                String memberName = jwtUtil.parseMemberNameFromToken(token);
+                UserDetails userDetails = new UserDetailsImpl(account, null, userAuthorities,
+                        userId, Uid, memberName); // 因為 token 裡不會記錄 password, 所以 constructor 裡的 password 欄位帶入 null
 
                 // 如果想讓系統更安全，可以用 token 取得的 userName 反查 userDetailsService 之後產生 UserDetails instance
                 // 但是 userDetailsService 的實作大多是到 DB 查資料，如果 http request 數量很大的話，要考慮幫它加上 cache 机制降低 DB 負擔

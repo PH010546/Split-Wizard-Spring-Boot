@@ -82,9 +82,11 @@ public class MemberServiceImpl implements MemberService {
 
             resp.setMember(memberVO);
             resp.setAuthToken(new JwtUtil().createToken(
-                    member.getAccount(),
+                    memberVO.getAccount(),
                     List.of(member.getAuthority()),
-                    member.getId()));
+                    memberVO.getId(),
+                    memberVO.getUID(),
+                    memberVO.getName()));
 
             return R.success(resp);
         }catch (Exception e){
@@ -134,7 +136,7 @@ public class MemberServiceImpl implements MemberService {
         try {
             List<Member> members = dao.findAll();
             List<Member> result = new ArrayList<>();
-            Integer currentUserId = ((UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUserId();
+            Integer currentUserId = ((UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
 
 
             for (Member m : members) {

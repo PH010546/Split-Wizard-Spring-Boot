@@ -27,7 +27,7 @@ public class NotificationController {
 
     @GetMapping("/getNotifications")
     public Result getNotificationsWithLimit(){
-        Integer currentUserId = ((UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUserId();
+        Integer currentUserId = ((UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
         return service.getNotificationsWithLimit(currentUserId);
     }
     @PostMapping("/readNotification")
@@ -36,7 +36,7 @@ public class NotificationController {
     }
     @GetMapping("/getAllNotifications")
     public Result getAllNotifications(){
-        Integer currentUserId = ((UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUserId();
+        Integer currentUserId = ((UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
         return service.getAllNotifications(currentUserId);
     }
 
