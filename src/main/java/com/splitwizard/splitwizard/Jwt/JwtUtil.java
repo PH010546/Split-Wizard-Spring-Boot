@@ -26,9 +26,10 @@ public class JwtUtil {
 
 //    private static @Value("${jwt.signKey}") String jwtSignKey;
     private final String jwtSignKey = "sexyEasonHasadghaspdogiuhas;dlgkhjasfgarharhsarh";
-//    private static @Value("${jwt.expireTimeAsSec}") long jwtExpireTimeAsSec;
-    private final Long jwtExpireTimeAsSec = 3600000L;
+
     public String createToken(String account, List<String> userRoles, Integer userId, String UID, String memberName){
+        //    private static @Value("${jwt.expireTimeAsSec}") long jwtExpireTimeAsSec;
+        long jwtExpireTimeAsSec = 86400L; // one day
         String token = Jwts.builder()
                 .setSubject(account)
                 .addClaims(Map.of(CLAIMS_KEY_USER_ROLES, userRoles)) // 把 userRoles 也記錄進來
