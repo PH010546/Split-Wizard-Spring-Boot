@@ -122,6 +122,21 @@ public class NotificationServiceImpl implements NotificationService {
         }
     }
 
+    @Override
+    public Result deleteNotification(Integer notificationId) {
+        if (notificationId == null) return R.fail("notificationId is null");
+        else if (notificationId <= 0) return R.fail("notificationId is negative or zero");
+        else {
+            try {
+                dao.deleteById(notificationId);
+                return R.success("Notification deleted");
+            } catch (Exception e) {
+                e.printStackTrace();
+                return R.fail(e.getMessage());
+            }
+        }
+    }
+
     private void setNotificationMessage(List<NotificationDTO> dtoList) {
         for (NotificationDTO d : dtoList){
 

@@ -6,10 +6,7 @@ import com.splitwizard.splitwizard.VO.NotificationVO;
 import com.splitwizard.splitwizard.service.NotificationServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class NotificationController {
@@ -38,6 +35,11 @@ public class NotificationController {
     public Result getAllNotifications(){
         Integer currentUserId = ((UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
         return service.getAllNotifications(currentUserId);
+    }
+
+    @DeleteMapping("/deleteNotification")
+    public Result deleteNotification(@RequestBody NotificationVO notificationVO){
+        return service.deleteNotification(notificationVO.getId());
     }
 
 }
