@@ -3,9 +3,12 @@ FROM openjdk:17-jdk-slim
 WORKDIR /app
 
 COPY mvnw .
+COPY .mvn .mvn
+COPY pom.xml .
+
 RUN ./mvnw clean install
 
-COPY app/target/splitwizard-0.1.jar .
+COPY ./target/splitwizard-0.1.jar .
 
 RUN java -jar splitwizard-0.1.jar
 
