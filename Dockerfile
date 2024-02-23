@@ -2,6 +2,9 @@ FROM openjdk:17-jdk-slim
 
 WORKDIR /app
 
+RUN echo $JAVA_HOME
+RUN echo $MAVEN_HOME
+
 COPY mvnw .
 COPY .mvn .mvn
 COPY pom.xml .
