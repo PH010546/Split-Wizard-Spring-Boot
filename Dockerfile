@@ -6,7 +6,8 @@ COPY mvnw .
 COPY .mvn .mvn
 COPY pom.xml .
 
-RUN ./mvnw clean install -DskipTests -e
+RUN ./mvnw spring-boot:build-image
+
 #COPY target/*.jar splitwizard.jar
 #
 #RUN chmod +x splitwizard.jar
