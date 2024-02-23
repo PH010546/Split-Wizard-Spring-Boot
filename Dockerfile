@@ -14,4 +14,4 @@ RUN java -jar splitwizard.jar
 
 EXPOSE 8080
 
-CMD ["java", "-jar", "splitwizard-0.1.jar"]
+CMD ["java", "-jar", "splitwizard.jar"]
