@@ -6,12 +6,11 @@ COPY mvnw .
 COPY .mvn .mvn
 COPY pom.xml .
 
-RUN ./mvnw clean install
-
+RUN ./mvnw package
 COPY target/*.jar splitwizard.jar
 
-RUN java -jar splitwizard.jar
+RUN chmod +x splitwizard.jar
 
 EXPOSE 8080
 
-CMD ["java", "-jar", "splitwizard.jar"]
+CMD ["splitwizard.jar"]
