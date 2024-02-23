@@ -8,9 +8,9 @@ COPY pom.xml .
 
 RUN ./mvnw clean install
 
-COPY ./target/splitwizard-0.1.jar .
+COPY target/*.jar splitwizard.jar
 
-RUN java -jar splitwizard-0.1.jar
+RUN java -jar splitwizard.jar
 
 EXPOSE 8080
 
