@@ -7,7 +7,7 @@ COPY .mvn .mvn
 COPY pom.xml .
 
 RUN ./mvnw clean install -DskipTests -e
-COPY ./target/*.jar splitwizard.jar
+COPY target/*.jar splitwizard.jar
 
 RUN chmod +x splitwizard.jar
 
